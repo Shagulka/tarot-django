@@ -1,8 +1,10 @@
 from django.views.generic import ListView
 
+from .models import Fortune
+
 
 class FortuneListView(ListView):
-    # model = Fortune
+    model = Fortune
     template_name = 'fortune/fortune_lists.html'
     context_object_name = 'fortune_list'
 
