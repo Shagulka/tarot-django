@@ -3,8 +3,8 @@ from django.views.generic import ListView
 
 class FortuneListView(ListView):
     # model = Fortune
-    template_name = 'fortune/fortune_detail.html'
-    context_object_name = 'item'
+    template_name = 'fortune/fortune_lists.html'
+    context_object_name = 'fortune_list'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

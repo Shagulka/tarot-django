@@ -1,0 +1,10 @@
+{% extends 'base.html' %}]
+
+{% block title %}
+    Список гаданий
+{% endblock %}
+{% block content %}
+    {% for fortune in fortune_list %}
+        <a class="btn btn-primary" href="/" role="button">{{ fortune.id }}</a>
+    {% endfor %}
+{% endblock %}
