@@ -11,6 +11,6 @@ class FortuneAdmin(admin.ModelAdmin):
 
 
 @admin.register(CardTitle)
-class FortuneAdmin(admin.ModelAdmin):
+class CardTitleAdmin(admin.ModelAdmin):
     list_display = ('name',)
     list_display_links = ('name',)
