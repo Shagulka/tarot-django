@@ -12,8 +12,14 @@ class FortuneListView(ListView):
     def get_queryset(self):
         return Fortune.objects.all()
 
-    def post(self, request, *args, **kwargs):
-        pass
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['fortunes'] =  self.get_queryset()
+        return context
+
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+
 
 
 class FortuneDetailView(DetailView):

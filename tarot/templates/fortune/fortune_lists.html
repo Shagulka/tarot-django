@@ -4,7 +4,7 @@
     Список гаданий
 {% endblock %}
 {% block content %}
-    {% for fortune in fortune_list %}
+    {% for fortune in fortunes %}
         {# не работает #}
         {# <a class="btn btn-primary" href="/" role="button">{{ fortune.id }}</a> #}
         <a href="{% url 'fortune:fortune_detail' fortune.pk %}">{{ fortune.pk }}</a>

@@ -19,65 +19,80 @@ class CardTitle(models.Model):
 
 class Fortune(models.Model):
     name = models.CharField(
-        'название гадания короткое',
+        'название гадания',
         max_length=150,
-        default='Название',
+        default='Название для админки и т.д.',
     )
     slug = models.SlugField(
         'идентификатор',
         unique=True,
-        default='id-fortune',
+        null=True,
         max_length=200,
         help_text='Максимальная длина 200 символов'
     )
     title_for_main_page = models.CharField(
         'название для главной страницы',
         max_length=150,
-        default='Название',
+        null=True,
+        help_text='Название гадания, которое будет отображаться на главной странице'
     )
+
+    fortune_description = models.TextField(
+        'описание карточки с гаданием',
+        default='Описание',
+        help_text='Описание карточки с гаданием в главном меню'
+    )
+
     title_for_fortune = models.CharField(
         'название гадания',
         max_length=150,
-        default='Название',
+        blank=True,
+        help_text='Название гадания, которое будет отображаться на странице гадания'
     )
-    type_fortune_telling = models.PositiveIntegerField(
+
+    class TypesAlignment(models.IntegerChoices):
+        TAROT_1 = 1, 'Таро 1'
+        TAROT_2 = 2, 'Таро 2'
+        TAROT_3 = 3, 'Таро 3'
+        TAROT_4 = 4, 'Таро 4'
+        TAROT_2_3 = 5, 'Таро 2-3'
+        TAROT_3_3 = 6, 'Таро 2-4'
+        TAROT_3_3_1 = 7, 'Таро 3-4'
+        TAROT_STAR = 8, 'Таро звезда'
+        TAROT_9 = 9, 'Таро 9'
+        
+    type_fortune_telling = models.IntegerField(
         'тип гадания',
-        default=1,
-        validators=[
-            MinValueValidator(1),
-        ],
+        choices=TypesAlignment.choices,
+        default=TypesAlignment.TAROT_1,
         help_text='Тип гадания'
     )
+
     title_for_cards = models.ManyToManyField(
         CardTitle,
         verbose_name='тайтлы для карт',
-    )
-    card_description = models.TextField(
-        'описание карты',
-        default='Описание',
-        help_text='Описание карты'
-    )
-    default_card_description = models.TextField(
-        'дефолтное описание карты',
-        default='Описание',
-        help_text='Дефолтное описание товара'
+        #TODO validate that the number of cards is equal to the type of fortune
+        help_text='Тайтлы для карт (типа ПРОШЛОЕ, НАСТОЯЩЕЕ, БУДУЩЕЕ)'
     )
 
-    number_of_cards = models.PositiveIntegerField(
-        'количество карт',
-        default=1,
-        validators=[
-            MinValueValidator(1),
-        ],
-        help_text='Количество карт в гадании'
+    class TypesFortune(models.IntegerChoices):
+        REGULAR = 1, 'Обычное'
+        LOVE = 2, 'Любовное'
+        MONEY = 3, 'Денежное'
+        WORK = 4, 'Работа'
+        DAY = 5, 'День'
+
+    default_card_description = models.TextField(
+        'тип гадания',
+        choices=TypesFortune.choices,
+        default=TypesFortune.REGULAR,
+        help_text='Тип гадания (какое описание карты будет по умолчанию)'
     )
 
     price = models.PositiveIntegerField(
         'цена',
-        default=50,
-        validators=[
-            MinValueValidator(1),
-        ],
+        default=0,
+        validators=[MinValueValidator(0)],
         help_text='Цена гадания'
     )
 
