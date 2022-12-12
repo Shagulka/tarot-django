@@ -57,7 +57,7 @@ class Fortune(models.Model):
         TAROT_4 = 4, 'Таро 4'
         TAROT_2_3 = 5, 'Таро 2-3'
         TAROT_3_3 = 6, 'Таро 2-4'
-        TAROT_3_3_1 = 7, 'Таро 3-4'
+        TAROT_H = 7, 'Таро 3-4'
         TAROT_STAR = 8, 'Таро звезда'
         TAROT_9 = 9, 'Таро 9'
         
@@ -66,6 +66,13 @@ class Fortune(models.Model):
         choices=TypesAlignment.choices,
         default=TypesAlignment.TAROT_1,
         help_text='Тип гадания'
+    )
+
+    number_of_cards = models.IntegerField(
+        'количество карт',
+        default=1,
+        validators=[MinValueValidator(1)],
+        help_text='Количество карт в гадании (пожалуйста, убедитесь, что количество карт соответствует типу гадания)'
     )
 
     title_for_cards = models.ManyToManyField(
