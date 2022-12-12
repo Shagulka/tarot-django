@@ -1,0 +1,9 @@
+{% extends 'base.html' %}]
+
+{% block title %}
+    {{ fortune.title_for_main_page }}
+{% endblock %}
+{% block content %}
+    <h2>{{ fortune.title_for_fortune }}</h2>
+    <p>{{ fortune.card_description }}</p>
+{% endblock %}

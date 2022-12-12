@@ -5,6 +5,8 @@
 {% endblock %}
 {% block content %}
     {% for fortune in fortune_list %}
-        <a class="btn btn-primary" href="/" role="button">{{ fortune.id }}</a>
+        {# не работает #}
+        {# <a class="btn btn-primary" href="/" role="button">{{ fortune.id }}</a> #}
+        <a href="{% url 'fortune:fortune_detail' fortune.pk %}">{{ fortune.pk }}</a>
     {% endfor %}
 {% endblock %}

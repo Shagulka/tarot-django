@@ -83,7 +83,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [BASE_DIR / 'static-dev']
+STATICFILES_DIRS = [BASE_DIR / 'static_dev']
 
 STATIC_ROOT = 'static'
 
