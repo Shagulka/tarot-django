@@ -94,7 +94,7 @@ class Fortune(models.Model):
         WORK = 4, 'Работа'
         DAY = 5, 'День'
 
-    default_card_description = models.TextField(
+    default_card_description = models.IntegerField(
         'тип гадания',
         choices=TypesFortune.choices,
         default=TypesFortune.REGULAR,
