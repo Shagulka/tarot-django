@@ -34,7 +34,8 @@ class Fortune(models.Model):
         'название для главной страницы',
         max_length=150,
         null=True,
-        help_text='Название гадания, которое будет отображаться на главной странице'
+        help_text=('Название гадания, которое будет ',
+                   'отображаться на главной странице')
     )
 
     fortune_description = models.TextField(
@@ -47,7 +48,8 @@ class Fortune(models.Model):
         'название гадания',
         max_length=150,
         blank=True,
-        help_text='Название гадания, которое будет отображаться на странице гадания'
+        help_text=('Название гадания, которое будет ',
+                   'отображаться на странице гадания')
     )
 
     class TypesAlignment(models.IntegerChoices):
@@ -60,7 +62,7 @@ class Fortune(models.Model):
         TAROT_H = 7, 'Таро 3-4'
         TAROT_STAR = 8, 'Таро звезда'
         TAROT_9 = 9, 'Таро 9'
-        
+
     type_fortune_telling = models.IntegerField(
         'тип гадания',
         choices=TypesAlignment.choices,
@@ -72,14 +74,18 @@ class Fortune(models.Model):
         'количество карт',
         default=1,
         validators=[MinValueValidator(1)],
-        help_text='Количество карт в гадании (пожалуйста, убедитесь, что количество карт соответствует типу гадания)'
+        help_text=('Количество карт в гадании ',
+                   '(пожалуйста, убедитесь, что количество карт ',
+                   'соответствует типу гадания)')
     )
 
     title_for_cards = models.ManyToManyField(
         CardTitle,
         verbose_name='тайтлы для карт',
-        #TODO validate that the number of cards is equal to the type of fortune
-        help_text='Тайтлы для карт (типа ПРОШЛОЕ, НАСТОЯЩЕЕ, БУДУЩЕЕ)'
+        # TODO validate that the number
+        # of cards is equal to the type of fortune
+        help_text=('Тайтлы для карт ',
+                   '(типа ПРОШЛОЕ, НАСТОЯЩЕЕ, БУДУЩЕЕ)')
     )
 
     class TypesFortune(models.IntegerChoices):
@@ -93,7 +99,8 @@ class Fortune(models.Model):
         'тип гадания',
         choices=TypesFortune.choices,
         default=TypesFortune.REGULAR,
-        help_text='Тип гадания (какое описание карты будет по умолчанию)'
+        help_text=('Тип гадания (какое описание ',
+                   'карты будет по умолчанию)')
     )
 
     price = models.PositiveIntegerField(

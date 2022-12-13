@@ -1,8 +1,10 @@
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 
-from .models import Fortune
 from deck.generators import Deck
+
+from .models import Fortune
+
 
 class FortuneListView(ListView):
     model = Fortune
@@ -14,12 +16,11 @@ class FortuneListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['fortunes'] =  self.get_queryset()
+        context['fortunes'] = self.get_queryset()
         return context
 
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
-
 
 
 class FortuneDetailView(DetailView):
@@ -44,7 +45,6 @@ class FortuneDetailView(DetailView):
             return 'fortune/tarot/tarot_star.html'
         elif self.object.type_fortune_telling == 9:
             return 'fortune/tarot/tarot_9.html'
-
 
     def get_context_data(self, **kwargs):
         cards = Deck().get_cards(self.object)
