@@ -6,7 +6,7 @@ class Deck:
     def __init__(self):
 
         # print(listdir('.'))
-        json_file = open('./deck/data/cards.json')
+        json_file = open('./deck/data/cards.json', encoding='utf-8')
 
         self.data = json.load(json_file)
 
