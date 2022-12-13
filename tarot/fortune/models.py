@@ -34,7 +34,7 @@ class Fortune(models.Model):
         'название для главной страницы',
         max_length=150,
         null=True,
-        help_text=('Название гадания, которое будет ',
+        help_text=('Название гадания, которое будет '
                    'отображаться на главной странице')
     )
 
@@ -48,7 +48,7 @@ class Fortune(models.Model):
         'название гадания',
         max_length=150,
         blank=True,
-        help_text=('Название гадания, которое будет ',
+        help_text=('Название гадания, которое будет '
                    'отображаться на странице гадания')
     )
 
@@ -74,8 +74,8 @@ class Fortune(models.Model):
         'количество карт',
         default=1,
         validators=[MinValueValidator(1)],
-        help_text=('Количество карт в гадании ',
-                   '(пожалуйста, убедитесь, что количество карт ',
+        help_text=('Количество карт в гадании '
+                   '(пожалуйста, убедитесь, что количество карт '
                    'соответствует типу гадания)')
     )
 
@@ -84,8 +84,7 @@ class Fortune(models.Model):
         verbose_name='тайтлы для карт',
         # TODO validate that the number
         # of cards is equal to the type of fortune
-        help_text=('Тайтлы для карт ',
-                   '(типа ПРОШЛОЕ, НАСТОЯЩЕЕ, БУДУЩЕЕ)')
+        help_text=('Тайтлы для карт (типа ПРОШЛОЕ, НАСТОЯЩЕЕ, БУДУЩЕЕ)')
     )
 
     class TypesFortune(models.IntegerChoices):
@@ -99,8 +98,7 @@ class Fortune(models.Model):
         'тип гадания',
         choices=TypesFortune.choices,
         default=TypesFortune.REGULAR,
-        help_text=('Тип гадания (какое описание ',
-                   'карты будет по умолчанию)')
+        help_text=('Тип гадания (какое описание карты будет по умолчанию)')
     )
 
     price = models.PositiveIntegerField(
