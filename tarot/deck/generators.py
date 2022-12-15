@@ -1,6 +1,7 @@
 import json
 import os
 import random
+
 import openai
 
 
@@ -35,8 +36,8 @@ class Deck:
 
         card_text = 'Карты:\n' + '\n'.join(generated_cards)
 
-        
-        prompt = f"Сгенерируй гадание на тему {theme}.\n{card_text}\n\nГадание:\n"
+        prompt = (f"Сгенерируй гадание на тему {theme}.\n"
+                  f"{card_text}\n\nГадание:\n")
 
         print(prompt)
         response = openai.Completion.create(
@@ -54,14 +55,12 @@ class Deck:
         else:
             return 'Не удалось получить гадание. Попробуйте еще раз.'
 
-
-    
-
     def get_cards(self, fortune, user=None):
         random_cards = self.data.copy()
         if user:
             random.seed(
                 str(user.name + user.surname + str(user.date_of_birth)))
         random.shuffle(random_cards)
-        prediction = self.get_gpt_prediction(fortune, random_cards[:fortune.number_of_cards], user)
+        prediction = self.get_gpt_prediction(
+            fortune, random_cards[:fortune.number_of_cards], user)
         return (random_cards[:fortune.number_of_cards], prediction)
