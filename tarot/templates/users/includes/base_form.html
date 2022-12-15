@@ -1,0 +1,30 @@
+{% csrf_token %}
+<div class="container justify-content-center">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% for field, error in form.errors.items %}
+        <div class="alert alert-danger my-3 p-1" role="alert">
+            {{ error|striptags }}
+        </div>
+    {% endfor %}
+    {% for field in form %}
+
+        <br>
+        <div class="row justify-content-center">
+            <div class="form-group" align="center">
+                <p class=" text-center"><b>{{ field.label_tag }}</b></p>
+                <div style="max-width: 300px">{{ field }}</div>
+                {% if field.help_text %}
+                    <p class="help">{{ field.help_text|safe }}</p>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+
+</div>
+
