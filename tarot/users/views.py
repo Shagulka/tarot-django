@@ -8,7 +8,7 @@ from django.views.generic.list import ListView
 
 from .forms import AccountChangeForm, AccountCreationForm
 from .models import Account
-from .permissions import CustomLoginRequiredMixin, StuffPermissionRequiredMixin
+from .permissions import CustomLoginRequiredMixin
 
 
 class SignUpFormView(SuccessMessageMixin, CreateView):
