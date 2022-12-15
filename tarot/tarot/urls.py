@@ -4,8 +4,10 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
+    path('', include('homepage.urls')),
     path('admin/', admin.site.urls),
     path('fortune/', include('fortune.urls')),
+
 ]
 if settings.DEBUG:
     if settings.MEDIA_ROOT:
