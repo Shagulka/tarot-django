@@ -47,8 +47,9 @@ class FortuneDetailView(DetailView):
             return 'fortune/tarot/tarot_9.html'
 
     def get_context_data(self, **kwargs):
-        cards = Deck().get_cards(self.object)
+        cards, prediction = Deck().get_cards(self.object)
         context = super().get_context_data(**kwargs)
         context['cards'] = cards
+        context['prediction'] = prediction
         context['fortune'] = self.object
         return context
