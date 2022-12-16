@@ -1,5 +1,7 @@
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView
 from django.views.generic.detail import DetailView
@@ -18,12 +20,13 @@ class SignUpFormView(SuccessMessageMixin, CreateView):
     success_message = 'Вы успешно зарегистрированы'
 
     def form_valid(self, form):
-        return super().form_valid(form)
-        # user = form.save(commit=False)
-        # user.set_password(form.cleaned_data.get('password'))
-        # user.save()
-        # login(self.request, user)
-        # return redirect(self.success_url)
+        form.save()
+        user = authenticate(
+            username=form.cleaned_data['email'],
+            password=form.cleaned_data['password1'],
+        )
+        login(self.request, user)
+        return redirect(self.success_url)
 
 
 class ProfileUpdate(

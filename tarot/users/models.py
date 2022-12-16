@@ -10,20 +10,21 @@ class Account(AbstractUser):
         MALE = 2, 'мужчина'
 
     username = None
+    first_name = models.CharField('имя', max_length=100)
+    last_name = models.CharField('фамилия', max_length=100)
     email = models.EmailField(
         'адрес электронной почты',
         unique=True
     )
     date_of_birth = models.DateField(
-        blank=True,
         null=True
     )
     custom_username = models.SlugField(
         'ник',
         unique=True,
         null=True,
-        max_length=200,
-        help_text='Максимальная длина 200 символов'
+        max_length=50,
+        help_text='Максимальная длина 50 символов'
     )
     bio = models.CharField(
         null=True,
@@ -43,33 +44,51 @@ class Account(AbstractUser):
 
     objects = CustomAccountManager()
 
+    @property
     def get_zodiac_sign(self):
         day, month = self.date_of_birth.day, self.date_of_birth.month
 
         if month == 12:
-            return 'Стрелец' if (day < 22) else 'Козерог'
+            return 9 if (day < 22) else 10
         elif month == 1:
-            return 'Козерог' if (day < 20) else 'Водолей'
+            return 10 if (day < 20) else 11
         elif month == 2:
-            return 'Водолей' if (day < 19) else 'Рыбы'
+            return 11 if (day < 19) else 12
         elif month == 3:
-            return 'Рыбы' if (day < 21) else 'Овен'
+            return 12 if (day < 21) else 1
         elif month == 4:
-            return 'Овен' if (day < 20) else 'Телец'
+            return 1 if (day < 20) else 2
         elif month == 5:
-            return 'Телец' if (day < 21) else 'Близнецы'
+            return 2 if (day < 21) else 3
         elif month == 6:
-            return 'Близнецы' if (day < 21) else 'Рак'
+            return 3 if (day < 21) else 4
         elif month == 7:
-            return 'Рак' if (day < 23) else 'Лев'
+            return 4 if (day < 23) else 5
         elif month == 8:
-            return 'Лев' if (day < 23) else 'Дева'
+            return 5 if (day < 23) else 6
         elif month == 9:
-            return 'Дева' if (day < 23) else 'Весы'
+            return 6 if (day < 23) else 7
         elif month == 10:
-            return 'Весы' if (day < 23) else 'Скорпион'
+            return 7 if (day < 23) else 8
         elif month == 11:
-            return 'Скорпион' if (day < 22) else 'Стрелец'
+            return 8 if (day < 22) else 9
+
+    def zodiac_sign(self):
+        zodiac_dict = {
+            1: 'Овен',
+            2: ' Телец',
+            3: ' Близнецы',
+            4: ' Рак',
+            5: ' Лев',
+            6: ' Дева',
+            7: ' Весы',
+            8: ' Скорпион',
+            9: ' Стрелец',
+            10: ' Козерог',
+            11: ' Водолей',
+            12: ' Рыбы'
+        }
+        return zodiac_dict.get(self.get_zodiac_sign)
 
     def __str__(self):
         return self.email
