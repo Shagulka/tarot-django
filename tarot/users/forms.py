@@ -5,10 +5,10 @@ from .models import Account
 
 
 class AccountCreationForm(UserCreationForm):
-
     class Meta(UserCreationForm):
         model = Account
         fields = (Account.email.field.name,)
+
 
 class AccountChangeForm(UserChangeForm):
     password = None
