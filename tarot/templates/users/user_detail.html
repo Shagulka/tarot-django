@@ -1,0 +1,16 @@
+{% extends 'users/includes/base.html' %}
+{% block title %}Профиль{% endblock %}
+{% block content %}
+    <div class="container">
+        <h1 class="text-center">Ваш магический профиль</h1>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Имя: {{ account.get_full_name }}</li>
+            <li class="list-group-item">Дата рождения: {{ account.date_of_birth }}</li>
+            <li class="list-group-item">Ник: {{ account.custom_username }}</li>
+            <li class="list-group-item">Био: {{ account.bio }}</li>
+            <li class="list-group-item">Пол: {{ account.get_gender_display }}</li>
+            <li class="list-group-item">Знак зодиака: {{ account.get_zodiac_sign }}</li>
+
+        </ul>
+    </div>
+{% endblock %}

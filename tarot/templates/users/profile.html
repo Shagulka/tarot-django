@@ -1,0 +1,13 @@
+{% extends 'users/includes/base.html' %}
+{% block title %}Профиль{% endblock %}
+{% block content %}
+    <form method="post">
+        {% include 'users/includes/base_form.html' %}
+        <br>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+        </div>
+
+    </form>
+    <p class="text-center text-danger">Хотите сменить пароль? Нажмите <a href="{% url 'users:password_change' %}">сюда</a></p>
+{% endblock %}
