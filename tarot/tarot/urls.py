@@ -8,6 +8,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('fortune/', include('fortune.urls')),
 
+    path('users/', include('users.urls', namespace='users')),
+    path('accounts/', include('django.contrib.auth.urls'))
+
 ]
 if settings.DEBUG:
     if settings.MEDIA_ROOT:

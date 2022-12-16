@@ -7,3 +7,4 @@ django-cleanup==6.0.0
 Pillow==9.3.0
 PyYAML==6.0
 django-debug-toolbar==3.7.0
+openai==0.25.0
