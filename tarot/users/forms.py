@@ -20,7 +20,8 @@ class AccountChangeForm(UserChangeForm):
                   Account.custom_username.field.name,
                   Account.bio.field.name,
                   Account.date_of_birth.field.name,
-                  Account.gender.field.name
+                  Account.gender.field.name,
+                  Account.profile_picture.field.name
                   )
         labels = {
             'first_name': 'Имя',
@@ -29,16 +30,21 @@ class AccountChangeForm(UserChangeForm):
             'date_of_birth': 'Дата рождения',
             'bio': 'Био',
             'gender': 'Пол',
+            'profile_picture': 'Ваша фотография'
         }
         widgets = {
             'date_of_birth': forms.DateInput(attrs={'type': 'date'},
                                              format='%Y-%m-%d'),
             'gender': forms.Select(attrs={'class': 'form-select'},
                                    choices=Account.GenderTypes.choices),
+            'profile_picture': forms.FileInput(
+                attrs={'class': 'form-control'}
+            ),
         }
         help_texts = {
             'first_name': 'Укажите ваше имя',
             'last_name': 'Укажите вашу фамилию',
             'gender': 'Укажите свой пол',
             'date_of_birth': 'Введите дату в формате ДД.ММ.ГГГГ',
+            'profile_picture': 'Добавьте свою фотографию'
         }

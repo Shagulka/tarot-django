@@ -1,15 +1,25 @@
 {% extends 'users/includes/base.html' %}
+{% load static %}
 {% block title %}Профиль{% endblock %}
 {% block content %}
     <div class="container">
         <h1 class="text-center">Ваш магический профиль</h1>
         <ul class="list-group list-group-flush">
+            {% if account.profile_picture %}
+                <img src="{{ account.get_profile_pic.url }}" class="img-thumbnail" width="200px" height="200px">
+
+            {% else %}
+                <img src="{% static 'users/blank_user_picture.png' %}" class="img-thumbnail" width="200px" height="200px">
+            {% endif %}
             <li class="list-group-item">Имя: {{ account.get_full_name }}</li>
-            <li class="list-group-item">Дата рождения: {{ account.date_of_birth }}</li>
+
             <li class="list-group-item">Ник: {{ account.custom_username }}</li>
             <li class="list-group-item">Био: {{ account.bio }}</li>
             <li class="list-group-item">Пол: {{ account.get_gender_display }}</li>
-            <li class="list-group-item">Знак зодиака: {{ account.zodiac_sign }}</li>
+            {% if account.date_of_birth %}
+                <li class="list-group-item">Дата рождения: {{ account.date_of_birth }}</li>
+                <li class="list-group-item">Знак зодиака: {{ account.zodiac_sign }}</li>
+            {% endif %}
 
 
         </ul>

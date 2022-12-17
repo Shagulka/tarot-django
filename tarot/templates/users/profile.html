@@ -1,7 +1,7 @@
 {% extends 'users/includes/base.html' %}
 {% block title %}Профиль{% endblock %}
 {% block content %}
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         {% include 'users/includes/base_form.html' %}
         <br>
         <div class="text-center">
