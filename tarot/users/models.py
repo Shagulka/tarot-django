@@ -5,6 +5,7 @@ from django_cleanup.signals import cleanup_pre_delete
 from sorl.thumbnail import delete, get_thumbnail
 
 from .managers import CustomAccountManager
+from .time_zone import get_utc_offset
 
 
 class Account(AbstractUser):
@@ -52,6 +53,10 @@ class Account(AbstractUser):
     REQUIRED_FIELDS = []
 
     objects = CustomAccountManager()
+
+    @property
+    def get_time_zone(self):
+        return get_utc_offset()
 
     @property
     def get_zodiac_sign(self):
