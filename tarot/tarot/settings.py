@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     'sorl.thumbnail',
     'fortune',
     'users',
+    'coins',
 
 ]
 

@@ -52,6 +52,7 @@ class Account(AbstractUser):
         max_length=5,
         null=True
     )
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
