@@ -1,3 +1,7 @@
+from datetime import datetime
+
+import pytz
+import requests
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
@@ -7,6 +11,8 @@ from django.views.generic import UpdateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
+
+from tarot import settings
 
 from .forms import AccountChangeForm, AccountCreationForm
 from .models import Account
@@ -40,8 +46,26 @@ class ProfileUpdate(
     success_message = 'Данные успешно обновлены'
     success_url = reverse_lazy('users:profile')
 
+    def get_client_ip(self):
+        return self.request.META.get('REMOTE_ADDR')
+
+    def get_utc_offset(self):
+        ip_address = self.get_client_ip()
+        response = requests.get(f'https://ipapi.co/{ip_address}/json/').json()
+        return response.get('utc_offset')
+
     def get_object(self, queryset=None):
         return self.request.user
+
+    def form_valid(self, form):
+        timezone = self.get_utc_offset()
+        if timezone:
+            form.instance.timezone = timezone
+        else:
+            form.instance.timezone = datetime.now(
+                pytz.timezone(settings.TIME_ZONE)).astimezone().strftime('%z')
+        form.save()
+        return super().form_valid(form)
 
 
 class UsersListView(
