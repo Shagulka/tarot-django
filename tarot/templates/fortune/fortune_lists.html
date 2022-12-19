@@ -1,11 +1,14 @@
 {% extends 'base.html' %}]
-
+{% load static %}
 {% block title %}
     Список гаданий
 {% endblock %}
+
 {% block content %}
+
     <div class="container">
         <h1 class="text-light">Список гаданий</h1>
+
     {% for fortune in fortunes %}
     <style type="text/css">
         .fortune {
