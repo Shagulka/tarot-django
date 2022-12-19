@@ -1,17 +1,21 @@
+import datetime
 from datetime import datetime
 
 import pytz
 import requests
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.views.generic import UpdateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 
+from coins.models import BankAccount
 from tarot import settings
 
 from .forms import AccountChangeForm, AccountCreationForm
@@ -49,21 +53,20 @@ class ProfileUpdate(
     def get_client_ip(self):
         return self.request.META.get('REMOTE_ADDR')
 
-    def get_utc_offset(self):
+    def get_timezone(self):
         ip_address = self.get_client_ip()
         response = requests.get(f'https://ipapi.co/{ip_address}/json/').json()
-        return response.get('utc_offset')
+        return response.get('timezone')
 
     def get_object(self, queryset=None):
         return self.request.user
 
     def form_valid(self, form):
-        timezone = self.get_utc_offset()
+        timezone = self.get_timezone()
         if timezone:
             form.instance.timezone = timezone
         else:
-            form.instance.timezone = datetime.now(
-                pytz.timezone(settings.TIME_ZONE)).astimezone().strftime('%z')
+            form.instance.timezone = settings.TIME_ZONE
         form.save()
         return super().form_valid(form)
 
@@ -88,4 +91,19 @@ class UserDetailView(
     template_name = 'users/user_detail.html'
 
     def get_context_data(self, **kwargs):
+        bank_account = get_object_or_404(BankAccount, user=self.request.user)
+
+        last_bonus_time = pytz.timezone(self.object.timezone).localize(
+            self.object.bonus).astimezone(pytz.timezone(settings.TIME_ZONE))
+        if timezone.now() - last_bonus_time >= datetime.timedelta(hours=24):
+            bank_account += 20
+            bank_account.save()
+        else:
+            messages.error(
+                self.request,
+                'Получить бонусные монетки можно только раз в 24 часа'
+            )
+
+            return redirect('fortune:fortune_list')
+
         return super().get_context_data(**kwargs)
