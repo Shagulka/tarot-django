@@ -37,15 +37,34 @@
             </div>
             <a class="navbar-brand mx-5 fs-3 fw-normal" href="{% url 'homepage:home' %}" style="color: #FEEBC7">ONLINE
                 TAROT</a>
-            <div>
+            {% if user.is_authentiticated %}
+                <div class="dropdown rounded-5 px-4 py-2 " style="background: #1E1E1E">
+                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                       data-bs-toggle="dropdown" aria-expanded="false">
 
-                <button class="btn btn-success me-2"
-                        type="submit">Login
-                </button>
-                <button class="btn btn-light" type="submit">Register
-                </button>
+                        <span class="fw-light me-2 fs-5">145₪</span>
+                        <strong>Дмитрий</strong>
+                        <img src="https://github.com/mdo.png" alt="" width="53" height="53" class="rounded-circle mx-2">
 
-            </div>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Выйти</a></li>
+
+                    </ul>
+
+                </div>
+            {% else %}
+                <div>
+
+                    <a class="btn btn-success me-2" href="{% url "users:login" %}">Вход
+                    </a>
+                    <a class="btn btn-light" href="{% url "users:signup" %}">Регистрация
+                    </a>
+
+                </div>
+            {% endif %}
+
+
         </div>
 
 
@@ -115,10 +134,10 @@
 
 </footer>
 
+<script type="text/javascript" src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+<script type="text/javascript" defer src="{% static "main.js" %}"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-<script defer src="{% static "main.js" %}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
 
 </body>
 </html>
