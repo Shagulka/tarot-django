@@ -1,11 +1,12 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 
 from coins.models import BankAccount
 from deck.generators import Deck
+from users.permissions import CustomLoginRequiredMixin
 
 from .models import Fortune
 
@@ -27,7 +28,7 @@ class FortuneListView(LoginRequiredMixin, ListView):
         return super().get(request, *args, **kwargs)
 
 
-class FortuneDetailView(LoginRequiredMixin, DetailView):
+class FortuneDetailView(CustomLoginRequiredMixin, DetailView):
     model = Fortune
 
     def get_template_names(self):
@@ -51,7 +52,7 @@ class FortuneDetailView(LoginRequiredMixin, DetailView):
             return 'fortune/tarot/tarot_9.html'
 
     def get_context_data(self, **kwargs):
-        bank_account = BankAccount.objects.get(user=self.request.user)
+        bank_account = get_object_or_404(BankAccount, user=self.request.user)
         if self.object.price <= bank_account.balance:
             bank_account.balance -= self.object.price
             bank_account.save()
