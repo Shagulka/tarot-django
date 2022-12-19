@@ -1,45 +1,13 @@
 from django import forms
-from django.contrib.auth.forms import UserChangeForm
-from django.core.exceptions import ValidationError
+from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 
 from .models import Account
 
 
-class AccountCreationForm(forms.ModelForm):
-    password1 = forms.CharField(
-        label='Пароль',
-        widget=forms.PasswordInput(attrs={'class': 'form-control'})
-    )
-    password2 = forms.CharField(
-        label='Подтверждение пароля',
-        widget=forms.PasswordInput(attrs={'class': 'form-control'})
-    )
-
-    class Meta:
+class AccountCreationForm(UserCreationForm):
+    class Meta(UserCreationForm):
         model = Account
         fields = (Account.email.field.name,)
-        widgets = {
-            Account.email.field.name: forms.TextInput(
-                attrs={'class': 'form-control'}
-            ),
-
-        }
-
-    def clean_password2(self):
-
-        password1 = self.cleaned_data.get("password1")
-        password2 = self.cleaned_data.get("password2")
-        if password1 and password2 and password1 != password2:
-            raise ValidationError("Пароли не одинаковы")
-        return password2
-
-    def save(self, commit=True):
-
-        user = super().save(commit=False)
-        user.set_password(self.cleaned_data["password1"])
-        if commit:
-            user.save()
-        return user
 
 
 class AccountChangeForm(UserChangeForm):
@@ -52,26 +20,31 @@ class AccountChangeForm(UserChangeForm):
                   Account.custom_username.field.name,
                   Account.bio.field.name,
                   Account.date_of_birth.field.name,
-                  Account.gender.field.name
+                  Account.gender.field.name,
+                  Account.profile_picture.field.name
                   )
         labels = {
-            'name': 'Имя',
-            'surname': 'Фамилия',
+            'first_name': 'Имя',
+            'last_name': 'Фамилия',
             'username': 'Ник',
             'date_of_birth': 'Дата рождения',
             'bio': 'Био',
             'gender': 'Пол',
+            'profile_picture': 'Ваша фотография'
         }
         widgets = {
             'date_of_birth': forms.DateInput(attrs={'type': 'date'},
                                              format='%Y-%m-%d'),
             'gender': forms.Select(attrs={'class': 'form-select'},
                                    choices=Account.GenderTypes.choices),
+            'profile_picture': forms.FileInput(
+                attrs={'class': 'form-control'}
+            ),
         }
         help_texts = {
-            'name': 'max 255 символов',
-            'surname': 'max 255 символов',
-            'username': 'max 255 символов',
+            'first_name': 'Укажите ваше имя',
+            'last_name': 'Укажите вашу фамилию',
             'gender': 'Укажите свой пол',
             'date_of_birth': 'Введите дату в формате ДД.ММ.ГГГГ',
+            'profile_picture': 'Добавьте свою фотографию'
         }
