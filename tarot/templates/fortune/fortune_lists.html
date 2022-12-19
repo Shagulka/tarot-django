@@ -4,9 +4,25 @@
     Список гаданий
 {% endblock %}
 {% block content %}
+    <div class="container">
+        <h1 class="text-light">Список гаданий</h1>
     {% for fortune in fortunes %}
+    <style type="text/css">
+        .fortune {
+            background-color: #580599;
+        }
+    </style>
+    <div class="badge fortune p-3">
         {# не работает #}
         {# <a class="btn btn-primary" href="/" role="button">{{ fortune.id }}</a> #}
-        <a href="{% url 'fortune:fortune_detail' fortune.pk %}">{{ fortune.pk }}</a>
+        <p class="h3">{{ fortune.title_for_main_page }}</p>
+        <p class="text-light">{{ fortune.fortune_description }}</p>
+        <div class="justify-content-end">
+            <a class="btn btn-primary" href="{% url 'fortune:fortune_detail' fortune.pk %}" role="button">{{ fortune.price }} 🪙</a>
+        </div>
+
+    
+    </div>
     {% endfor %}
+    </div>
 {% endblock %}
