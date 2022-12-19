@@ -6,11 +6,12 @@ from django.urls import include, path
 urlpatterns = [
     path('', include('homepage.urls')),
     path('admin/', admin.site.urls),
-    path('fortune/', include('fortune.urls')),
+    path('fortune/', include('fortune.urls', namespace='fortune')),
     path('users/', include('users.urls', namespace='users')),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('coins/', include('coins.urls', namespace='coins'))
     path('accounts/', include('django.contrib.auth.urls'))
-
-]
+    ]
 if settings.DEBUG:
     if settings.MEDIA_ROOT:
         urlpatterns += static(settings.MEDIA_URL,

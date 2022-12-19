@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Гадание
+{% endblock title %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            {% for card in cards %}
+                <div class="col-3 text-light" id="card">
+                    <img class="card-img-top py-3"
+                         src="{% static card.image %}"
+                         alt="card.name"/>
+                    <h2 class="card-title text-center">{{ card.name }}</h2>
+                    <p class="card-text text-center" style="font-size: 13px">{{ card.regular }}</p>
+                </div>
+            {% endfor %}
+            <div class="col-3 text-light py-3" id="prediction">
+                <div class="badge bg-success w-100">
+                    <h2>GPT3</h2>
+                </div>
+                <div class="py-3">
+                    <div class="card">
+                        <div class="card-body text-black">
+                            <h5 class="card-title text-center">Предсказание:</h5>
+                            <p class="card-text text-center">{{ prediction }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="py-3">
+                    <a href="{% url 'fortune:fortune_list' %}" class="btn btn-success w-100">К предсказаниям</a>
+                </div>
+                <a href="https://t.me/share/url?url={{ 'вставить ссылку на сайт' }}&text=смотри какое крутое предсказание у меня на этом сайте: {{ prediction }}"
+                   class="btn btn-primary w-100">Поделиться</a>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
