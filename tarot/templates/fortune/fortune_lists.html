@@ -1,12 +1,29 @@
 {% extends 'base.html' %}]
-
+{% load static %}
 {% block title %}
     Список гаданий
 {% endblock %}
+
 {% block content %}
+
     {% for fortune in fortunes %}
         {# не работает #}
         {# <a class="btn btn-primary" href="/" role="button">{{ fortune.id }}</a> #}
         <a href="{% url 'fortune:fortune_detail' fortune.pk %}">{{ fortune.pk }}</a>
+
     {% endfor %}
+    <section class="singlecard">
+        <div id="card1" class="card">
+            <figure class="front"><img src="http://www.sacred-texts.com/tarot/tcc/img/ugar02.jpg"/></figure>
+            <figure class="back">
+                <h3> About this Card </h3>
+                <div class="description">
+                    <p><em class="titlecr">The High Priestess</em> represents <em>wisdom</em>, <em>serenity</em>, <em>knowledge</em>
+                        and <em>understanding</em>. She is often described as the guardian of the unconscious. She sits
+                        in front of the thin veil of awareness, which is all that separates us from our inner selves.
+                    </p>
+                </div>
+            </figure>
+        </div>
+    </section>
 {% endblock %}

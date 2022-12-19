@@ -17,7 +17,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'fortune',
-    'homepage'
+    'users',
+
 ]
 
 MIDDLEWARE = [
@@ -74,7 +75,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -93,3 +94,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media.example/'
 
 MEDIA_ROOT = BASE_DIR / 'media.example'
+
+EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+
+AUTH_USER_MODEL = 'users.Account'
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/users/login'
