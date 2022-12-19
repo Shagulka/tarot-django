@@ -51,14 +51,14 @@ class FortuneDetailView(LoginRequiredMixin, DetailView):
             return 'fortune/tarot/tarot_9.html'
 
     def get_context_data(self, **kwargs):
-        bank_account = BankAccount.objects.get(user=self.request.user)
-        if self.object.price <= bank_account.balance:
-            bank_account.balance -= self.object.price
-            bank_account.save()
-        else:
-            self.object = None
-            messages.error(self.request, 'Недостаточно средств')
-            return redirect('fortune:fortune_list')
+        #bank_account = BankAccount.objects.get(user=self.request.user)
+        #if self.object.price <= bank_account.balance:
+            #bank_account.balance -= self.object.price
+            #bank_account.save()
+        #else:
+            #self.object = None
+            #messages.error(self.request, 'Недостаточно средств')
+            #return redirect('fortune:fortune_list')
         cards, prediction = Deck().get_cards(self.object)
         context = super().get_context_data(**kwargs)
         context['cards'] = cards

@@ -61,6 +61,8 @@ class Deck:
             random.seed(
                 str(user.name + user.surname + str(user.date_of_birth)))
         random.shuffle(random_cards)
-        prediction = self.get_gpt_prediction(
+        prediction = 'будущее неизвестно'
+        if os.environ.get('OPENAI_API_KEY'):
+            prediction = self.get_gpt_prediction(
             fortune, random_cards[:fortune.number_of_cards], user)
         return (random_cards[:fortune.number_of_cards], prediction)
