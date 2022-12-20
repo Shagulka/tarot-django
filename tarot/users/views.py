@@ -69,11 +69,6 @@ class ProfileUpdate(
         form.save()
         return super().form_valid(form)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        balance = BankAccount.objects.get(user=self.request.user.id).balance
-        context['balance'] = balance
-        return context
 
 
 class UsersListView(

@@ -19,8 +19,6 @@ class FortuneListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['fortunes'] = self.get_queryset()
-        balance = BankAccount.objects.get(user=self.request.user.id).balance
-        context['balance'] = balance
         return context
 
     def get(self, request, *args, **kwargs):
@@ -64,6 +62,4 @@ class FortuneDetailView(LoginRequiredMixin, DetailView):
         context['cards'] = cards
         context['prediction'] = prediction
         context['fortune'] = self.object
-        balance = BankAccount.objects.get(user=self.request.user.id).balance
-        context['balance'] = balance
         return context
