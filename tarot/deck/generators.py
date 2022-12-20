@@ -36,7 +36,7 @@ class Deck:
 
         card_text = 'Карты:\n' + '\n'.join(generated_cards)
 
-        prompt = (f"Сгенерируй гадание на тему {theme}.\n"
+        prompt = (f"Сгенерируй {theme} по картам .\n"
                   f"{card_text}\n\nГадание:\n")
 
         print(prompt)
