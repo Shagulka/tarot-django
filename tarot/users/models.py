@@ -12,7 +12,6 @@ class Account(AbstractUser):
         FEMALE = 1, 'женщина'
         MALE = 2, 'мужчина'
 
-
     username = None
     first_name = models.CharField('имя', max_length=100)
     last_name = models.CharField('фамилия', max_length=100)
@@ -60,7 +59,6 @@ class Account(AbstractUser):
     objects = CustomAccountManager()
 
     gender_choices = dict(GenderTypes.choices)
-
 
     def get_zodiac_sign(self):
         if self.date_of_birth:
