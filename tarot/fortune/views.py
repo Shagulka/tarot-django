@@ -1,12 +1,11 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-
-
+from django.shortcuts import redirect
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 
 from coins.models import BankAccount
 from deck.generators import Deck
-from users.permissions import CustomLoginRequiredMixin
 
 from .models import Fortune
 
@@ -54,14 +53,6 @@ class FortuneDetailView(LoginRequiredMixin, DetailView):
             return 'fortune/tarot/tarot_9.html'
 
     def get_context_data(self, **kwargs):
-        # bank_account = BankAccount.objects.get(user=self.request.user)
-        # if self.object.price <= bank_account.balance:
-        # bank_account.balance -= self.object.price
-        # bank_account.save()
-        # else:
-        # self.object = None
-        # messages.error(self.request, 'Недостаточно средств')
-        # return redirect('fortune:fortune_list')
         cards, prediction = Deck().get_cards(self.object)
         context = super().get_context_data(**kwargs)
         context['cards'] = cards
@@ -70,3 +61,17 @@ class FortuneDetailView(LoginRequiredMixin, DetailView):
         balance = BankAccount.objects.get(user=self.request.user.id).balance
         context['balance'] = balance
         return context
+
+    def get(self, *args, **kwargs):
+        self.object = self.get_object()
+        context = self.get_context_data(object=self.object)
+        bank_account = BankAccount.objects.get(user=self.request.user)
+        if self.object.price <= bank_account.balance:
+            bank_account.balance -= self.object.price
+            bank_account.save()
+        else:
+            self.object = None
+            messages.error(self.request, 'Недостаточно средств')
+            return redirect('fortune:fortune_list')
+
+        return super().get(*args, **kwargs)

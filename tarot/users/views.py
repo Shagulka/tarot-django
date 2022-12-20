@@ -1,14 +1,9 @@
-from datetime import datetime
-
-import pytz
 import requests
-from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.utils import timezone
 from django.views.generic import UpdateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
@@ -20,7 +15,6 @@ from tarot import settings
 from .forms import AccountChangeForm, AccountCreationForm
 from .models import Account
 from .permissions import CustomLoginRequiredMixin
-from coins.models import BankAccount
 
 
 class SignUpFormView(SuccessMessageMixin, CreateView):
@@ -98,19 +92,4 @@ class UserDetailView(
     template_name = 'users/user_detail.html'
 
     def get_context_data(self, **kwargs):
-        bank_account = get_object_or_404(BankAccount, user=self.request.user)
-
-        last_bonus_time = pytz.timezone(self.object.timezone).localize(
-            self.object.bonus).astimezone(pytz.timezone(settings.TIME_ZONE))
-        if timezone.now() - last_bonus_time >= datetime.timedelta(hours=24):
-            bank_account += 20
-            bank_account.save()
-        else:
-            messages.error(
-                self.request,
-                'Получить бонусные монетки можно только раз в 24 часа'
-            )
-
-            return redirect('fortune:fortune_list')
-
         return super().get_context_data(**kwargs)
