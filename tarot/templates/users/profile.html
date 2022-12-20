@@ -1,13 +1,90 @@
-{% extends 'users/includes/base.html' %}
+{% extends 'base.html' %}
 {% block title %}Профиль{% endblock %}
 {% block content %}
-    <form method="post" enctype="multipart/form-data">
-        {% include 'users/includes/base_form.html' %}
-        <br>
-        <div class="text-center">
-            <button type="submit" class="btn btn-primary">Сохранить</button>
-        </div>
+    <div class="container rounded bg-white mt-5 mb-5 p-5">
+        <h1 class="text-center text-dark col-12">Ваш магический профиль</h1>
+        <div class="row">
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                    {% if account.profile_picture %}
+                        <img class="rounded-circle mt-5"
+                             width="150px"
+                             src="{{ account.profile_picture.url }}">
+                    {% else %}
+                        <img class="rounded-circle mt-5"
+                             width="150px"
+                             src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                    {% endif %}
+                    <ul class="list-group d-flex justify-content-start">
+                        <span class="text-black-50 fw-bold">{{ user.email }}</span>
+                        <li class="list-group-item rounded-3">Имя: {{ account.get_full_name }}</li>
 
-    </form>
-    <p class="text-center text-danger">Хотите сменить пароль? Нажмите <a href="{% url 'users:password_change' %}">сюда</a></p>
+                        <li class="list-group-item rounded-3 mt-2">Ник: {{ account.custom_username }}</li>
+                        <li class="list-group-item rounded-3 mt-2">Био: {{ account.bio }}</li>
+                        <li class="list-group-item rounded-3 mt-2">Пол: {{ account.get_gender_display }}</li>
+                        {% if account.date_of_birth %}
+                            <li class="list-group-item rounded-3 mt-2">Дата рождения: {{ account.date_of_birth }}</li>
+                            <li class="list-group-item rounded-3 mt-2">Знак зодиака: {{ account.zodiac_sign }}</li>
+                        {% endif %}
+                    </ul>
+
+
+                </div>
+            </div>
+            <div class="col-md-9 border-right">
+                <div class="p-3 py-5">
+                    {% if messages %}
+                        <div class="row">
+                            <div class="col-sm-6 col-sm-offset-3">
+                                {% for message in messages %}
+                                    <div class="alert alert-{{ message.tags }}" role="alert">
+                                        <p>{{ message }}</p>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                        </div>
+                    {% endif %}
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Настройки профиля</h4>
+                    </div>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% load static %}
+                        <div class="container justify-content-center text-light">
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-{{ message.tags }}">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            {% for field, error in form.errors.items %}
+                                <div class="alert alert-danger my-3 p-1" role="alert">
+                                    {{ error|striptags }}
+                                </div>
+                            {% endfor %}
+                            {% for field in form %}
+                                <label class="text-dark text-center"><b>{{ field.label_tag }}</b></label>
+                                {{ field }}
+                                {% if field.help_text %}
+                                    <p class="text-dark help">{{ field.help_text|safe }}</p>
+                                {% endif %}
+                            {% endfor %}
+
+                        </div>
+                        <br>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Сохранить</button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <a href="{% url 'users:password_change' %}">
+            <button class="btn btn-primary profile-button" type="submit">Сменить пароль</button>
+        </a>
+    </div>
 {% endblock %}

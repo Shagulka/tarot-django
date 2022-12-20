@@ -64,5 +64,5 @@ class Deck:
         prediction = 'будущее неизвестно'
         if os.environ.get('OPENAI_API_KEY'):
             prediction = self.get_gpt_prediction(
-            fortune, random_cards[:fortune.number_of_cards], user)
-        return (random_cards[:fortune.number_of_cards], prediction)
+                fortune, random_cards[:fortune.number_of_cards], user)
+        return random_cards[:fortune.number_of_cards], prediction

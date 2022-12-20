@@ -13,6 +13,11 @@ class AccountCreationForm(UserCreationForm):
 class AccountChangeForm(UserChangeForm):
     password = None
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.visible_fields():
+            field.field.widget.attrs['class'] = 'form-control mb-3'
+
     class Meta:
         model = Account
         fields = (Account.first_name.field.name,
