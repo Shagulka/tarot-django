@@ -10,13 +10,13 @@ class ProfileAdmin(BaseUserAdmin):
     form = AccountChangeForm
     add_form = AccountCreationForm
 
-    list_display = ('email', 'first_name', 'last_name', 'is_staff')
+    list_display = ('email', 'first_name', 'last_name', 'is_staff', 'profile_picture')
     list_editable = ('is_staff',)
     ordering = ('email',)
     fieldsets = (
         (None, {'fields': ('email', 'password',)}),
         ('Personal info', {
-            'fields': ('first_name', 'last_name', 'date_of_birth',)
+            'fields': ('first_name', 'last_name', 'date_of_birth', 'profile_picture')
         }),
 
     )

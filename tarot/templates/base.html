@@ -43,20 +43,17 @@
             </div>
             <a class="navbar-brand mx-5 fs-3 fw-normal" href="{% url 'homepage:home' %}" style="color: #FEEBC7">ONLINE
                 TAROT</a>
-            {% if user.is_authentiticated %}
-                <div class="dropdown rounded-5 px-4 py-2 " style="background: #1E1E1E">
-                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-                       data-bs-toggle="dropdown" aria-expanded="false">
+            {% if user.is_authenticated %}
+                <div class="rounded-5 px-4 py-2 " style="background: #1E1E1E">
 
-                        <span class="fw-light me-2 fs-5">145₪</span>
-                        <strong>Дмитрий</strong>
-                        <img src="https://github.com/mdo.png" alt="" width="53" height="53" class="rounded-circle mx-2">
+                    <span class="fw-light fs-5 text-light">{{ balance }}</span>
+                    <span class="text-light me-2 fs-5">₪</span>
+                    <a href="{% url 'users:user_detail' user.id %}"><strong
+                            class="text-light text-decoration-none">{{ user.email }}</strong></a>
+                    <img src="{{ user.profile_picture.url }}" alt="" width="53" height="53"
+                         class="rounded-circle mx-2">
+                    <a class="text-danger text-decoration-none" href="{% url 'users:logout' %}">Выйти</a>
 
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Выйти</a></li>
-
-                    </ul>
 
                 </div>
             {% else %}
