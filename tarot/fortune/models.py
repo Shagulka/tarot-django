@@ -2,21 +2,6 @@ from django.core.validators import MinValueValidator
 from django.db import models
 
 
-class CardTitle(models.Model):
-    name = models.CharField(
-        'название для карт',
-        max_length=150,
-        default='Название',
-    )
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = 'тайтл карты'
-        verbose_name_plural = 'Тайтлы для карты'
-
-
 class Fortune(models.Model):
     name = models.CharField(
         'название гадания',
@@ -90,14 +75,6 @@ class Fortune(models.Model):
             return 5
         elif self.type_fortune_telling == self.TypesAlignment.TAROT_9:
             return 9
-
-    title_for_cards = models.ManyToManyField(
-        CardTitle,
-        verbose_name='тайтлы для карт',
-        # TODO validate that the number
-        # of cards is equal to the type of fortune
-        help_text=('Тайтлы для карт (типа ПРОШЛОЕ, НАСТОЯЩЕЕ, БУДУЩЕЕ)')
-    )
 
     class TypesFortune(models.IntegerChoices):
         REGULAR = 1, 'Обычное'
