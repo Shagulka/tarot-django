@@ -17,6 +17,7 @@ from tarot import settings
 from .forms import AccountChangeForm, AccountCreationForm
 from .models import Account
 from .permissions import CustomLoginRequiredMixin
+from coins.models import BankAccount
 
 
 class SignUpFormView(SuccessMessageMixin, CreateView):
@@ -31,6 +32,7 @@ class SignUpFormView(SuccessMessageMixin, CreateView):
             username=form.cleaned_data['email'],
             password=form.cleaned_data['password1'],
         )
+        BankAccount.objects.get_or_create(user=user, balance=0)
         login(self.request, user)
         return redirect(self.success_url)
 
@@ -66,6 +68,12 @@ class ProfileUpdate(
                 pytz.timezone(settings.TIME_ZONE)).astimezone().strftime('%z')
         form.save()
         return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        balance = BankAccount.objects.get(user=self.request.user.id).balance
+        context['balance'] = balance
+        return context
 
 
 class UsersListView(

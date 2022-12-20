@@ -58,7 +58,8 @@ class Account(AbstractUser):
 
     objects = CustomAccountManager()
 
-    @property
+    gender_choices = dict(GenderTypes.choices)
+
     def get_zodiac_sign(self):
         if self.date_of_birth:
             day, month = self.date_of_birth.day, self.date_of_birth.month
