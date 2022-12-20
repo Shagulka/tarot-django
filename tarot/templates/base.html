@@ -48,10 +48,15 @@
 
                     <span class="fw-light fs-5 text-light">{{ balance }}</span>
                     <span class="text-light me-2 fs-5">₪</span>
-                    <a href="{% url 'users:user_detail' user.id %}"><strong
+                    <a href="{% url 'users:profile' %}"><strong
                             class="text-light text-decoration-none">{{ user.email }}</strong></a>
-                    <img src="{{ user.profile_picture.url }}" alt="" width="53" height="53"
-                         class="rounded-circle mx-2">
+                    {% if user.profile_picture %}
+                        <img src="{{ user.profile_picture.url }}" alt="" width="53" height="53"
+                             class="rounded-circle mx-2">
+                    {% else %}
+                        <img src="{% static 'users/blank_user_picture.png' %}" alt="" width="53" height="53"
+                             class="rounded-circle mx-2">
+                    {% endif %}
                     <a class="text-danger text-decoration-none" href="{% url 'users:logout' %}">Выйти</a>
 
 
@@ -101,7 +106,7 @@
 
             </li>
             <li class="my-5">
-                <a href="#">
+                <a href="{% url 'users:profile' %}">
 
                     <span class="fs-3">Аккаунт</span>
                 </a>
@@ -120,22 +125,20 @@
 
 
     {% block content %}{% endblock %}
+    <footer class="container position-relative p-4 text-light">
 
+
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2022 Copyright: TAROT ONLINE
+
+
+        </div>
+
+
+    </footer>
 
 </div>
 
-
-<footer class="container position-relative p-4 text-light" style="clear: both; margin-top: 1200px;">
-
-
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-        © 2022 Copyright: TAROT ONLINE
-
-
-    </div>
-
-
-</footer>
 
 <script type="text/javascript" src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
 <script type="text/javascript" defer src="{% static "main.js" %}"></script>
