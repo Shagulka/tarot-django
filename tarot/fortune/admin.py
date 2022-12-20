@@ -7,5 +7,3 @@ from .models import Fortune
 class FortuneAdmin(admin.ModelAdmin):
     list_display = ('name',)
     list_display_links = ('name',)
-
-

@@ -13,7 +13,7 @@ class FortuneListView(LoginRequiredMixin, ListView):
     context_object_name = 'fortune_list'
 
     # def get_queryset(self):
-        # return Fortune.objects.all()
+    # return Fortune.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
