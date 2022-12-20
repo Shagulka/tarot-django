@@ -56,7 +56,7 @@ class FortuneDetailView(LoginRequiredMixin, DetailView):
         # self.object = None
         # messages.error(self.request, 'Недостаточно средств')
         # return redirect('fortune:fortune_list')
-        cards, prediction = Deck().get_cards(self.object)
+        cards, prediction = Deck().get_cards(self.object, self.request.user)
         context = super().get_context_data(**kwargs)
         context['cards'] = cards
         context['prediction'] = prediction
