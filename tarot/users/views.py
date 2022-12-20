@@ -12,12 +12,12 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 
+from coins.models import BankAccount
 from tarot import settings
 
 from .forms import AccountChangeForm, AccountCreationForm
 from .models import Account
 from .permissions import CustomLoginRequiredMixin
-from coins.models import BankAccount
 
 
 class SignUpFormView(SuccessMessageMixin, CreateView):
@@ -68,7 +68,6 @@ class ProfileUpdate(
                 pytz.timezone(settings.TIME_ZONE)).astimezone().strftime('%z')
         form.save()
         return super().form_valid(form)
-
 
 
 class UsersListView(

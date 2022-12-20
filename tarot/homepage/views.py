@@ -1,8 +1,6 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
-from coins.models import BankAccount
-
 
 def home(request):
     template_name = 'homepage/homepage.html'
