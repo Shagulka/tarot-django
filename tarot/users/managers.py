@@ -1,5 +1,7 @@
 from django.contrib.auth.base_user import BaseUserManager
 
+from coins.models import BankAccount
+
 
 class CustomAccountManager(BaseUserManager):
     def create_user(self, email, password, **extra_fields):
@@ -9,6 +11,7 @@ class CustomAccountManager(BaseUserManager):
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save()
+        BankAccount.objects.get_or_create(user=user, balance=0)
         return user
 
     def create_superuser(self, email, password, **extra_fields):

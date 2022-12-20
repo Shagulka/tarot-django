@@ -12,16 +12,13 @@ class FortuneListView(LoginRequiredMixin, ListView):
     template_name = 'fortune/fortune_lists.html'
     context_object_name = 'fortune_list'
 
-    def get_queryset(self):
-        return Fortune.objects.all()
+    # def get_queryset(self):
+    # return Fortune.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['fortunes'] = self.get_queryset()
         return context
-
-    def get(self, request, *args, **kwargs):
-        return super().get(request, *args, **kwargs)
 
 
 class FortuneDetailView(LoginRequiredMixin, DetailView):
@@ -56,7 +53,7 @@ class FortuneDetailView(LoginRequiredMixin, DetailView):
         # self.object = None
         # messages.error(self.request, 'Недостаточно средств')
         # return redirect('fortune:fortune_list')
-        cards, prediction = Deck().get_cards(self.object)
+        cards, prediction = Deck().get_cards(self.object, self.request.user)
         context = super().get_context_data(**kwargs)
         context['cards'] = cards
         context['prediction'] = prediction

@@ -2,21 +2,6 @@ from django.core.validators import MinValueValidator
 from django.db import models
 
 
-class CardTitle(models.Model):
-    name = models.CharField(
-        'название для карт',
-        max_length=150,
-        default='Название',
-    )
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = 'тайтл карты'
-        verbose_name_plural = 'Тайтлы для карты'
-
-
 class Fortune(models.Model):
     name = models.CharField(
         'название гадания',
@@ -70,22 +55,26 @@ class Fortune(models.Model):
         help_text='Тип гадания'
     )
 
-    number_of_cards = models.IntegerField(
-        'количество карт',
-        default=1,
-        validators=[MinValueValidator(1)],
-        help_text=('Количество карт в гадании '
-                   '(пожалуйста, убедитесь, что количество карт '
-                   'соответствует типу гадания)')
-    )
-
-    title_for_cards = models.ManyToManyField(
-        CardTitle,
-        verbose_name='тайтлы для карт',
-        # TODO validate that the number
-        # of cards is equal to the type of fortune
-        help_text=('Тайтлы для карт (типа ПРОШЛОЕ, НАСТОЯЩЕЕ, БУДУЩЕЕ)')
-    )
+    @property
+    def get_number_of_cards(self):
+        if self.type_fortune_telling == self.TypesAlignment.TAROT_1:
+            return 1
+        elif self.type_fortune_telling == self.TypesAlignment.TAROT_2:
+            return 2
+        elif self.type_fortune_telling == self.TypesAlignment.TAROT_3:
+            return 3
+        elif self.type_fortune_telling == self.TypesAlignment.TAROT_4:
+            return 4
+        elif self.type_fortune_telling == self.TypesAlignment.TAROT_2_3:
+            return 5
+        elif self.type_fortune_telling == self.TypesAlignment.TAROT_3_3:
+            return 6
+        elif self.type_fortune_telling == self.TypesAlignment.TAROT_H:
+            return 7
+        elif self.type_fortune_telling == self.TypesAlignment.TAROT_STAR:
+            return 5
+        elif self.type_fortune_telling == self.TypesAlignment.TAROT_9:
+            return 9
 
     class TypesFortune(models.IntegerChoices):
         REGULAR = 1, 'Обычное'

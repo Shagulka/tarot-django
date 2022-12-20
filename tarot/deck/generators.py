@@ -1,3 +1,4 @@
+import datetime
 import json
 import os
 import random
@@ -36,7 +37,7 @@ class Deck:
 
         card_text = 'Карты:\n' + '\n'.join(generated_cards)
 
-        prompt = (f"Сгенерируй {theme} по картам .\n"
+        prompt = (f"Сгенерируй {theme} по картам.\n"
                   f"{card_text}\n\nГадание:\n")
 
         print(prompt)
@@ -53,16 +54,21 @@ class Deck:
         if response.choices:
             return response.choices[0].text
         else:
-            return 'Не удалось получить гадание. Попробуйте еще раз.'
+            return 'будущее неизвестно'
 
     def get_cards(self, fortune, user=None):
         random_cards = self.data.copy()
         if user:
-            random.seed(
-                str(user.name + user.surname + str(user.date_of_birth)))
+            today = datetime.datetime.now().date()
+            try:
+                random.seed(
+                    str(user.first_name + user.last_name +
+                        str(user.date_of_birth) + str(today)))
+            except Exception:
+                pass
         random.shuffle(random_cards)
         prediction = 'будущее неизвестно'
         if os.environ.get('OPENAI_API_KEY'):
             prediction = self.get_gpt_prediction(
-                fortune, random_cards[:fortune.number_of_cards], user)
-        return random_cards[:fortune.number_of_cards], prediction
+                fortune, random_cards[:fortune.get_number_of_cards], user)
+        return random_cards[:fortune.get_number_of_cards], prediction
