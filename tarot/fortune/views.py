@@ -4,10 +4,10 @@ from django.shortcuts import redirect
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 
+from coins.models import BankAccount
 from deck.generators import Deck
 
 from .models import Fortune
-from coins.models import BankAccount
 
 
 class FortuneListView(LoginRequiredMixin, ListView):

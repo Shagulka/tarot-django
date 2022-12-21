@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
+from coins.admin import BankAccountInline
+
 from .forms import AccountChangeForm, AccountCreationForm
 from .models import Account
 
@@ -9,6 +11,7 @@ from .models import Account
 class ProfileAdmin(BaseUserAdmin):
     form = AccountChangeForm
     add_form = AccountCreationForm
+    inlines = (BankAccountInline,)
 
     list_display = ('email',
                     'first_name',
@@ -26,12 +29,10 @@ class ProfileAdmin(BaseUserAdmin):
                        'date_of_birth',
                        'profile_picture')
         }
-         ),
+        ),
         ('Permissions', {'fields': ('is_active',
                                     'is_staff',
-                                    'is_superuser',
-                                    'groups',
-                                    'user_permissions')}),
+                                    'is_superuser',)}),
 
     )
     add_fieldsets = (
