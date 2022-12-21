@@ -14,7 +14,8 @@ from tarot import settings
 
 from .forms import AccountChangeForm, AccountCreationForm
 from .models import Account
-from .permissions import CustomLoginRequiredMixin
+from .permissions import (CustomLoginRequiredMixin,
+                          StuffPermissionRequiredMixin)
 
 
 class SignUpFormView(SuccessMessageMixin, CreateView):
@@ -68,6 +69,7 @@ class ProfileUpdate(
 
 class UsersListView(
     LoginRequiredMixin,
+    StuffPermissionRequiredMixin,
     ListView
 ):
     model = Account
@@ -80,6 +82,7 @@ class UsersListView(
 
 class UserDetailView(
     LoginRequiredMixin,
+    StuffPermissionRequiredMixin,
     DetailView
 ):
     model = Account

@@ -89,6 +89,7 @@ class Account(AbstractUser):
             elif month == 11:
                 return 8 if (day < 22) else 9
 
+    @property
     def zodiac_sign(self):
         zodiac_dict = {
             1: 'Овен',
@@ -104,7 +105,7 @@ class Account(AbstractUser):
             11: ' Водолей',
             12: ' Рыбы'
         }
-        return zodiac_dict.get(self.get_zodiac_sign)
+        return zodiac_dict.get(self.get_zodiac_sign())
 
     @property
     def get_profile_pic(self):
