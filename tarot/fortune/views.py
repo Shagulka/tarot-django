@@ -1,3 +1,6 @@
+import datetime
+import logging
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect
@@ -63,12 +66,18 @@ class FortuneDetailView(LoginRequiredMixin, DetailView):
         if self.object.price <= bank_account.balance:
 
             if (self.request.user.date_of_birth is not None and
-                    self.request.user.gender is not None and
                     self.request.user.first_name is not None and
                     self.request.user.last_name is not None):
 
                 bank_account.balance -= self.object.price
                 bank_account.save()
+                logger = logging.getLogger('django')
+                fh = logging.FileHandler('fortune.log')
+                logger.addHandler(fh)
+                logger.info(f'Пользователь {self.request.user}'
+                            f' оплатил гадание {self.object.name}'
+                            f' за {self.object.price} монет'
+                            f' в {datetime.datetime.now()}')
             else:
                 messages.error(
                     self.request,
