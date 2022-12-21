@@ -86,32 +86,35 @@
         <ul class="sidebar-nav nav-pills nav-stacked py-5 ps-5" id="menu">
             <li class="my-5">
                 <a href="{% url 'homepage:home' %}">
-
                     <span class="fs-3">Главная</span>
                 </a>
-
             </li>
+
             <li class="my-5">
                 <a href="#">
-
                     <span class="fs-3">Таропедия</span>
                 </a>
 
             </li>
+
             <li class="my-5">
                 <a href="#">
-
                     <span class="fs-3">История</span>
                 </a>
-
             </li>
+
             <li class="my-5">
                 <a href="{% url 'users:profile' %}">
-
                     <span class="fs-3">Аккаунт</span>
                 </a>
-
             </li>
+            {% if user.is_staff %}
+                <li class="my-5">
+                    <a href="{% url 'users:user_list' user.pk %}">
+                        <span class="fs-3">Список пользователей</span>
+                    </a>
+                </li>
+            {% endif %}
 
         </ul>
     </div>
