@@ -6,7 +6,7 @@ class Fortune(models.Model):
     name = models.CharField(
         'название гадания',
         max_length=150,
-        default='Название для админки и т.д.',
+        help_text='Название для админки и т.д.',
     )
     slug = models.SlugField(
         'идентификатор',
