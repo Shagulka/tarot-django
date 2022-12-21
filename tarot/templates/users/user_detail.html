@@ -1,21 +1,17 @@
-{% if account.profile_picture %}
-    <img class="rounded-circle mt-5"
-         width="150px"
-         src="{{ account.profile_picture.url }}">
-{% else %}
-    <img class="rounded-circle mt-5"
-         width="150px"
-         src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
-{% endif %}
-<ul class="list-group d-flex justify-content-start">
-    <span class="text-black-50 fw-bold">{{ user.email }}</span>
-    <li class="list-group-item rounded-3">Имя: {{ account.get_full_name }}</li>
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Профиль{% endblock %}
+{% block content %}
 
-    <li class="list-group-item">Ник: {{ account.custom_username }}</li>
-    <li class="list-group-item">Био: {{ account.bio }}</li>
-    <li class="list-group-item">Пол: {{ account.get_gender_display }}</li>
-    {% if account.date_of_birth %}
-        <li class="list-group-item">Дата рождения: {{ account.date_of_birth }}</li>
-        <li class="list-group-item">Знак зодиака: {{ account.zodiac_sign }}</li>
-    {% endif %}
-</ul>
+    <div class="container rounded bg-white mt-5 mb-5 p-5">
+        <h1 class="text-center text-dark col-12">Ваш магический профиль</h1>
+        <div class="row">
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                    {% include 'users/user_info.html' %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
