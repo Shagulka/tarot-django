@@ -63,7 +63,9 @@ class FortuneDetailView(LoginRequiredMixin, DetailView):
         if self.object.price <= bank_account.balance:
 
             if (self.request.user.date_of_birth is not None and
-                    self.request.user.gender is not None):
+                    self.request.user.gender is not None and
+                    self.request.user.first_name is not None and
+                    self.request.user.last_name is not None):
 
                 bank_account.balance -= self.object.price
                 bank_account.save()
