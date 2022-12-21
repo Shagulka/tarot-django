@@ -13,7 +13,12 @@ class Account(AbstractUser):
         MALE = 2, 'мужчина'
 
     username = None
-    first_name = models.CharField('имя', max_length=100)
+    first_name = models.CharField(
+        'имя',
+        null=True,
+        blank=True,
+        max_length=100
+    )
     last_name = models.CharField(
         'фамилия',
         null=True,
