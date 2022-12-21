@@ -12,6 +12,7 @@ class AccountCreationForm(UserCreationForm):
 
 class AccountChangeForm(UserChangeForm):
     password = None
+    required_css_class = 'required'
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -20,6 +21,7 @@ class AccountChangeForm(UserChangeForm):
 
     class Meta:
         model = Account
+
         fields = (Account.first_name.field.name,
                   Account.last_name.field.name,
                   Account.custom_username.field.name,

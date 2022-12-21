@@ -13,8 +13,14 @@ class Account(AbstractUser):
         MALE = 2, 'мужчина'
 
     username = None
-    first_name = models.CharField('имя', max_length=100)
-    last_name = models.CharField('фамилия', max_length=100)
+    first_name = models.CharField(
+        'имя',
+        max_length=100
+    )
+    last_name = models.CharField(
+        'фамилия',
+        max_length=100
+    )
     email = models.EmailField(
         'адрес электронной почты',
         unique=True
@@ -26,11 +32,13 @@ class Account(AbstractUser):
         'ник',
         unique=True,
         null=True,
+        blank=True,
         max_length=50,
         help_text='Максимальная длина 50 символов'
     )
     bio = models.CharField(
         null=True,
+        blank=True,
         max_length=200,
         help_text='Максимальная длина 200 символов'
     )

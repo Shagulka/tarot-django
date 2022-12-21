@@ -1,3 +1,7 @@
+label.required::after {
+    content: ' *';
+    color: red;
+}
 
 .nav-pills > li > a {
     border-radius: 0;
@@ -24,6 +28,7 @@
     background: rgba(30, 30, 30, 0.7);
     background-size: cover;
 }
+
 .main_content_no_active {
     pointer-events: none;
 }
@@ -180,4 +185,3 @@
         width: auto;
     }
 }
-

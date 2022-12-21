@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 
@@ -52,18 +52,30 @@ class FortuneDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['cards'] = cards
         context['prediction'] = prediction
-        context['fortune'] = self.object
+        context['fortune'] = self.get_object()
         return context
 
     def get(self, *args, **kwargs):
         self.object = self.get_object()
         self.get_context_data(object=self.object)
-        bank_account = BankAccount.objects.get(user=self.request.user)
+        bank_account = get_object_or_404(BankAccount, user=self.request.user)
+
         if self.object.price <= bank_account.balance:
-            bank_account.balance -= self.object.price
-            bank_account.save()
+
+            if (self.request.user.date_of_birth is not None and
+                    self.request.user.gender is not None and
+                    self.request.user.first_name is not None and
+                    self.request.user.last_name is not None):
+
+                bank_account.balance -= self.object.price
+                bank_account.save()
+            else:
+                messages.error(
+                    self.request,
+                    'Гадания недоступны,'
+                    ' так как вы не заполнили обязательные данные профиля'
+                )
         else:
-            self.object = None
             messages.error(self.request, 'Недостаточно средств')
             return redirect('fortune:fortune_list')
 
