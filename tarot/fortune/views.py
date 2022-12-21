@@ -7,7 +7,7 @@ from django.views.generic.detail import DetailView
 from deck.generators import Deck
 
 from .models import Fortune
-
+from coins.models import BankAccount
 
 class FortuneListView(LoginRequiredMixin, ListView):
     model = Fortune
@@ -47,14 +47,6 @@ class FortuneDetailView(LoginRequiredMixin, DetailView):
             return 'fortune/tarot/tarot_9.html'
 
     def get_context_data(self, **kwargs):
-        # bank_account = BankAccount.objects.get(user=self.request.user)
-        # if self.object.price <= bank_account.balance:
-        # bank_account.balance -= self.object.price
-        # bank_account.save()
-        # else:
-        # self.object = None
-        # messages.error(self.request, 'Недостаточно средств')
-        # return redirect('fortune:fortune_list')
         cards, prediction = Deck().get_cards(self.object, self.request.user)
         context = super().get_context_data(**kwargs)
         context['cards'] = cards
@@ -64,7 +56,7 @@ class FortuneDetailView(LoginRequiredMixin, DetailView):
 
     def get(self, *args, **kwargs):
         self.object = self.get_object()
-        context = self.get_context_data(object=self.object)
+        self.get_context_data(object=self.object)
         bank_account = BankAccount.objects.get(user=self.request.user)
         if self.object.price <= bank_account.balance:
             bank_account.balance -= self.object.price
