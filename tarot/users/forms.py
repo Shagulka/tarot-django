@@ -37,7 +37,7 @@ class AccountChangeForm(UserChangeForm):
             'date_of_birth': 'Дата рождения',
             'bio': 'Био',
             'gender': 'Пол',
-            'profile_picture': 'Ваша фотография'
+            'profile_picture': 'Фото профиля'
         }
         widgets = {
             'date_of_birth': forms.DateInput(attrs={'type': 'date'},
@@ -49,9 +49,9 @@ class AccountChangeForm(UserChangeForm):
             ),
         }
         help_texts = {
-            'first_name': 'Укажите ваше имя',
-            'last_name': 'Укажите вашу фамилию',
-            'gender': 'Укажите свой пол',
+            'first_name': 'Укажите имя',
+            'last_name': 'Укажите фамилию',
+            'gender': 'Укажите пол',
             'date_of_birth': 'Введите дату в формате ДД.ММ.ГГГГ',
-            'profile_picture': 'Добавьте свою фотографию'
+            'profile_picture': 'Добавьте фотографию'
         }
