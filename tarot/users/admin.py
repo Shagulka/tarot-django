@@ -17,6 +17,7 @@ class ProfileAdmin(BaseUserAdmin):
                     'profile_picture')
     list_editable = ('is_staff',)
     ordering = ('email',)
+    readonly_fields = ('password', 'date_joined', 'last_login')
     fieldsets = (
         (None, {'fields': ('email', 'password',)}),
         ('Personal info', {
@@ -24,7 +25,13 @@ class ProfileAdmin(BaseUserAdmin):
                        'last_name',
                        'date_of_birth',
                        'profile_picture')
-        }),
+        }
+         ),
+        ('Permissions', {'fields': ('is_active',
+                                    'is_staff',
+                                    'is_superuser',
+                                    'groups',
+                                    'user_permissions')}),
 
     )
     add_fieldsets = (
