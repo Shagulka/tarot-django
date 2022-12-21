@@ -16,7 +16,7 @@
         }
     </style>
     <div class="badge fortune p-3">
-        {# не работает #}
+
         {# <a class="btn btn-primary" href="/" role="button">{{ fortune.id }}</a> #}
         <p class="h3">{{ fortune.title_for_main_page }}</p>
         <p class="text-light">{{ fortune.fortune_description }}</p>
@@ -24,7 +24,7 @@
             <a class="btn btn-primary" href="{% url 'fortune:fortune_detail' fortune.pk %}" role="button">{{ fortune.price }} 🪙</a>
         </div>
 
-    
+
     </div>
     {% endfor %}
     </div>
