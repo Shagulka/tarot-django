@@ -1,4 +1,6 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 
@@ -59,3 +61,17 @@ class FortuneDetailView(LoginRequiredMixin, DetailView):
         context['prediction'] = prediction
         context['fortune'] = self.object
         return context
+
+    def get(self, *args, **kwargs):
+        self.object = self.get_object()
+        context = self.get_context_data(object=self.object)
+        bank_account = BankAccount.objects.get(user=self.request.user)
+        if self.object.price <= bank_account.balance:
+            bank_account.balance -= self.object.price
+            bank_account.save()
+        else:
+            self.object = None
+            messages.error(self.request, 'Недостаточно средств')
+            return redirect('fortune:fortune_list')
+
+        return super().get(*args, **kwargs)

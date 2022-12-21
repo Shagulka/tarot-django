@@ -15,7 +15,8 @@ class BankAccount(models.Model):
     )
     bonus = models.DateTimeField(
         'последнее время получения бонуса',
-        auto_now_add=True
+        null=True,
+        blank=True,
     )
 
     def __str__(self):

@@ -1,6 +1,3 @@
-from datetime import datetime
-
-import pytz
 import requests
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -51,21 +48,20 @@ class ProfileUpdate(
     def get_client_ip(self):
         return self.request.META.get('REMOTE_ADDR')
 
-    def get_utc_offset(self):
+    def get_timezone(self):
         ip_address = self.get_client_ip()
         response = requests.get(f'https://ipapi.co/{ip_address}/json/').json()
-        return response.get('utc_offset')
+        return response.get('timezone')
 
     def get_object(self, queryset=None):
         return self.request.user
 
     def form_valid(self, form):
-        timezone = self.get_utc_offset()
+        timezone = self.get_timezone()
         if timezone:
             form.instance.timezone = timezone
         else:
-            form.instance.timezone = datetime.now(
-                pytz.timezone(settings.TIME_ZONE)).astimezone().strftime('%z')
+            form.instance.timezone = settings.TIME_ZONE
         form.save()
         return super().form_valid(form)
 

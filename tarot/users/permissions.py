@@ -1,19 +1,7 @@
 from django.contrib import messages
-from django.contrib.auth.mixins import (LoginRequiredMixin,
-                                        PermissionRequiredMixin)
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-
-
-class StuffPermissionRequiredMixin(PermissionRequiredMixin):
-    permission_denied_message = 'У вас нет доступа к этой странице'
-    permission_denied_redirect_url = 'users:login'
-    permission_required = ('user.is_staff',)
-
-    def handle_no_permission(self):
-        messages.error(self.request, self.permission_denied_message,
-                       extra_tags='danger')
-        return redirect(reverse_lazy(self.permission_denied_redirect_url))
 
 
 class CustomLoginRequiredMixin(LoginRequiredMixin):
