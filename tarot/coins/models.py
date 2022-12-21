@@ -7,7 +7,7 @@ from tarot import settings
 class BankAccount(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE, )
+        on_delete=models.CASCADE,)
     balance = models.IntegerField(
         'баланс',
         validators=[MinValueValidator(0), ]

@@ -23,16 +23,16 @@ class ProfileAdmin(BaseUserAdmin):
     readonly_fields = ('password', 'date_joined', 'last_login')
     fieldsets = (
         (None, {'fields': ('email', 'password',)}),
-        ('Personal info', {
+        ('Персональные данные', {
             'fields': ('first_name',
                        'last_name',
                        'date_of_birth',
                        'profile_picture')
         }
         ),
-        ('Permissions', {'fields': ('is_active',
-                                    'is_staff',
-                                    'is_superuser',)}),
+        ('Статус', {'fields': ('is_active',
+                               'is_staff',
+                               'is_superuser',)}),
 
     )
     add_fieldsets = (
