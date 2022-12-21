@@ -4,7 +4,6 @@ from django.shortcuts import redirect
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 
-from coins.models import BankAccount
 from deck.generators import Deck
 
 from .models import Fortune
@@ -15,18 +14,13 @@ class FortuneListView(LoginRequiredMixin, ListView):
     template_name = 'fortune/fortune_lists.html'
     context_object_name = 'fortune_list'
 
-    def get_queryset(self):
-        return Fortune.objects.all()
+    # def get_queryset(self):
+    # return Fortune.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['fortunes'] = self.get_queryset()
-        balance = BankAccount.objects.get(user=self.request.user.id).balance
-        context['balance'] = balance
         return context
-
-    def get(self, request, *args, **kwargs):
-        return super().get(request, *args, **kwargs)
 
 
 class FortuneDetailView(LoginRequiredMixin, DetailView):
@@ -53,13 +47,19 @@ class FortuneDetailView(LoginRequiredMixin, DetailView):
             return 'fortune/tarot/tarot_9.html'
 
     def get_context_data(self, **kwargs):
-        cards, prediction = Deck().get_cards(self.object)
+        # bank_account = BankAccount.objects.get(user=self.request.user)
+        # if self.object.price <= bank_account.balance:
+        # bank_account.balance -= self.object.price
+        # bank_account.save()
+        # else:
+        # self.object = None
+        # messages.error(self.request, 'Недостаточно средств')
+        # return redirect('fortune:fortune_list')
+        cards, prediction = Deck().get_cards(self.object, self.request.user)
         context = super().get_context_data(**kwargs)
         context['cards'] = cards
         context['prediction'] = prediction
         context['fortune'] = self.object
-        balance = BankAccount.objects.get(user=self.request.user.id).balance
-        context['balance'] = balance
         return context
 
     def get(self, *args, **kwargs):

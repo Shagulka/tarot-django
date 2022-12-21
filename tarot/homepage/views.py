@@ -1,14 +1,9 @@
-from django.shortcuts import render
-
-from coins.models import BankAccount
+from django.shortcuts import redirect, render
+from django.urls import reverse
 
 
 def home(request):
     template_name = 'homepage/homepage.html'
-    context = {
-    }
     if request.user.is_authenticated:
-        balance = BankAccount.objects.get(user=request.user.id).balance
-        context['balance'] = balance
-
-    return render(request, template_name, context)
+        return redirect(reverse('fortune:fortune_list'))
+    return render(request, template_name)
