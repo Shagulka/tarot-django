@@ -9,6 +9,7 @@ from deck.generators import Deck
 from .models import Fortune
 from coins.models import BankAccount
 
+
 class FortuneListView(LoginRequiredMixin, ListView):
     model = Fortune
     template_name = 'fortune/fortune_lists.html'
