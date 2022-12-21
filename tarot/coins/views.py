@@ -18,12 +18,14 @@ class GetBonusMoneyView(LoginRequiredMixin, DetailView):
 
     def get(self, *args, **kwargs):
         self.object = self.get_object()
-        context = self.get_context_data(object=self.object)
+        self.get_context_data(object=self.object)
         last_bonus_time = self.object.bonus
         # last_bonus_time = pytz.timezone(self.object.timezone).localize(
         #     self.object.bonus).astimezone(pytz.timezone(settings.TIME_ZONE))
         if last_bonus_time:
-            if datetime.datetime.now(timezone.utc) - last_bonus_time >= datetime.timedelta(hours=24):
+            if datetime.datetime.now(
+                    timezone.utc
+            ) - last_bonus_time >= datetime.timedelta(hours=24):
                 self.object.balance += 20
 
                 self.object.bonus = datetime.datetime.now(timezone.utc)
