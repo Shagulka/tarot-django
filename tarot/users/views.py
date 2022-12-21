@@ -14,8 +14,7 @@ from tarot import settings
 
 from .forms import AccountChangeForm, AccountCreationForm
 from .models import Account
-from .permissions import (CustomLoginRequiredMixin,
-                          StuffPermissionRequiredMixin)
+from .permissions import CustomLoginRequiredMixin, StuffPermissionRequiredMixin
 
 
 class SignUpFormView(SuccessMessageMixin, CreateView):
