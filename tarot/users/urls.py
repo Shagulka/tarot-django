@@ -22,7 +22,7 @@ urlpatterns = [
          ), name='password_change'),
     path('change-password/done/',
          auth_views.PasswordChangeDoneView.as_view(
-             template_name='users/change_password_done.html'),
+             template_name='users/password_change_done.html'),
          name='password_change_done'),
     path('reset-password/',
          auth_views.PasswordResetView.as_view(
@@ -42,7 +42,7 @@ urlpatterns = [
          name='password_reset_confirm'),
     path('reset-password/complete/',
          auth_views.PasswordResetCompleteView.as_view(
-             template_name='users/reset_password_complete.html'),
+             template_name='users/password_reset_complete.html'),
          name='password_reset_complete'),
 
     path('signup/', views.SignUpFormView.as_view(), name='signup'),

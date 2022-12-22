@@ -1,5 +1,7 @@
 <form method="POST" class="text-light">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Сменить пароль">
+    <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary">Сменить пароль</button>
+    </div>
 </form>
