@@ -21,7 +21,8 @@ class GetBonusMoneyView(LoginRequiredMixin, DetailView):
     def get(self, *args, **kwargs):
         """Page for getting bonus money
 
-        if user already got bonus money in last 24 hours, then he can't get it again
+        if user already got bonus money in last 24 hours
+        then they can't get it again
 
         then redirect to previous page
         """

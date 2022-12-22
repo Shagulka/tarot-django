@@ -62,7 +62,8 @@ class FortuneDetailView(LoginRequiredMixin, DetailView):
     def get(self, *args, **kwargs):
         """Page for getting prediction
 
-        if user has enough money and personal info set up, then he can get prediction
+        if user has enough money and personal info set up,
+        then he can get prediction
         else redirect to fortune list page
         """
         self.object = self.get_object()
