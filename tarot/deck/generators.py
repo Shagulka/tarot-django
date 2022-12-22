@@ -57,10 +57,10 @@ class Deck:
                   f'{card_text}\nГадание:\n')
 
         response = openai.Completion.create(
-            engine='davinci',
+            engine='text-davinci-003',
             prompt=prompt,
             temperature=0.9,
-            max_tokens=256,
+            max_tokens=1000,
             top_p=1,
             frequency_penalty=0,
             presence_penalty=0,
