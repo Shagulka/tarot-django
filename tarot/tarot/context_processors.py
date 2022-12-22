@@ -4,6 +4,9 @@ from coins.models import BankAccount
 
 
 def add_user_balance_to_context(request):
+    """Add user balance and bonus money wait time
+    to context for all pages if user is authenticated
+    """
     if request.user.is_authenticated:
         context = {}
         balance = BankAccount.objects.get(user=request.user.id).balance
@@ -15,7 +18,6 @@ def add_user_balance_to_context(request):
             ) - bonus_time >= datetime.timedelta(hours=24):
                 context['bonus_status'] = 'Получить сейчас!'
             else:
-                # get time left to bonus time (only hours and minutes)
                 time_left = datetime.timedelta(hours=24) - (
                     datetime.datetime.now(datetime.timezone.utc) - bonus_time
                 )

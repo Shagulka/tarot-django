@@ -14,7 +14,19 @@ class Deck:
 
         self.data = json.load(json_file)
 
-    def get_gpt_prediction(self, fortune, cards, user=None):
+    def get_gpt_prediction(self, fortune, cards, user=None) -> str:
+        """Generate prediction using GPT-3
+        
+        Args:
+            fortune (Fortune): Fortune object
+            cards (list): List of cards
+            user (User, optional): User object. Defaults to None.
+            
+        Returns:
+            str: Prediction
+
+        if OPENAI_API_KEY is not provided, returns default prediction ('будущее неизвестно')
+        """
         openai.api_key = os.environ.get('OPENAI_API_KEY')
         theme = fortune.default_card_description
         if theme == 1:
@@ -61,7 +73,20 @@ class Deck:
         else:
             return 'будущее неизвестно'
 
-    def get_cards(self, fortune, user=None):
+    def get_cards(self, fortune, user=None) -> tuple[dict, str]:
+        """Get cards and prediction for fortune
+
+        Args:
+            fortune (Fortune): fortune object
+            user (User, optional): user object. Defaults to None.
+
+        Returns:
+            list: list of cards
+            str: prediction
+
+        if OPENAI_API_KEY is set, then use GPT-3 to generate prediction
+        otherwise the prediction is 'будущее неизвестно' 
+        """
         random_cards = self.data.copy()
         if user:
             today = datetime.datetime.now().date()
@@ -75,5 +100,5 @@ class Deck:
         prediction = 'будущее неизвестно'
         if os.environ.get('OPENAI_API_KEY'):
             prediction = self.get_gpt_prediction(
-                fortune, random_cards[:fortune.get_number_of_cards], user)
-        return random_cards[:fortune.get_number_of_cards], prediction
+                fortune, random_cards[:fortune.number_of_cards], user)
+        return random_cards[:fortune.number_of_cards], prediction
