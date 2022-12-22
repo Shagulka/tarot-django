@@ -47,6 +47,4 @@ urlpatterns = [
 
     path('signup/', views.SignUpFormView.as_view(), name='signup'),
     path('profile/', views.ProfileUpdate.as_view(), name='profile'),
-    path('list/', views.UsersListView.as_view(), name='user_list'),
-    path('<int:pk>/', views.UserDetailView.as_view(), name='user_detail'),
 ]

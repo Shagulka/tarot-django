@@ -112,13 +112,6 @@
                             <span class="fs-3">Аккаунт</span>
                         </a>
                     </li>
-                    {% if user.is_staff %}
-                        <li class="my-5">
-                            <a href="{% url 'users:user_list' %}">
-                                <span class="fs-3">Список пользователей</span>
-                            </a>
-                        </li>
-                    {% endif %}
                 </ul>
             </div>
         </div>

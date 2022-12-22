@@ -1,20 +1,17 @@
 import requests
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView
-from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
-from django.views.generic.list import ListView
 
 from coins.models import BankAccount
 from tarot import settings
 
 from .forms import AccountChangeForm, AccountCreationForm
 from .models import Account
-from .permissions import CustomLoginRequiredMixin, StuffPermissionRequiredMixin
+from .permissions import CustomLoginRequiredMixin
 
 
 class SignUpFormView(SuccessMessageMixin, CreateView):
@@ -64,28 +61,3 @@ class ProfileUpdate(
             form.instance.timezone = settings.TIME_ZONE
         form.save()
         return super().form_valid(form)
-
-
-class UsersListView(
-    LoginRequiredMixin,
-    StuffPermissionRequiredMixin,
-    ListView
-):
-    model = Account
-    template_name = 'users/users_list.html'
-    context_object_name = 'users'
-
-    def get_queryset(self):
-        return Account.objects.filter(is_active=True)
-
-
-class UserDetailView(
-    LoginRequiredMixin,
-    StuffPermissionRequiredMixin,
-    DetailView
-):
-    model = Account
-    template_name = 'users/user_detail.html'
-
-    def get_context_data(self, **kwargs):
-        return super().get_context_data(**kwargs)
