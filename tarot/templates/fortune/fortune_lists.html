@@ -1,31 +1,35 @@
-{% extends 'base.html' %}]
+{% extends 'base.html' %}
 {% load static %}
-{% block title %}
-    Список гаданий
-{% endblock %}
-
+{% block title %}Список гаданий{% endblock %}
 {% block content %}
-
     <div class="container">
         <h1 class="text-light">Список гаданий</h1>
-
-    {% for fortune in fortunes %}
-    <style type="text/css">
+        {% for fortune in fortunes %}
+            <style type="text/css">
         .fortune {
             background-color: #580599;
         }
-    </style>
-    <div class="badge fortune p-3">
-
-        {# <a class="btn btn-primary" href="/" role="button">{{ fortune.id }}</a> #}
-        <p class="h3">{{ fortune.title_for_main_page }}</p>
-        <p class="text-light">{{ fortune.fortune_description }}</p>
-        <div class="justify-content-end">
-            <a class="btn btn-primary" href="{% url 'fortune:fortune_detail' fortune.pk %}" role="button">{{ fortune.price }} 🪙</a>
-        </div>
-
-
-    </div>
-    {% endfor %}
+            </style>
+            <div class="badge fortune p-3 col-12">
+                {# <a class="btn btn-primary" href="/" role="button">{{ fortune.id }}</a> #}
+                <p class="h3">{{ fortune.title_for_main_page }}</p>
+                <p class="text-light">{{ fortune.fortune_description }}</p>
+                <div class="justify-content-end">
+                    <a id="buy_button"
+                       class="btn btn-primary"
+                       href="{% url 'fortune:fortune_detail' fortune.pk %}"
+                       role="button"
+                       onclick="start_load()">
+                        <span id="price">{{ fortune.price }} 🪙</span>
+                    </a>
+                    <script type="text/javascript">
+                        function start_load() {
+                            document.getElementById('buy_button').classList.add('disabled');
+                            document.getElementById('price').innerHTML = 'Загрузка...';
+                        }
+                    </script>
+                </div>
+            </div>
+        {% endfor %}
     </div>
 {% endblock %}
