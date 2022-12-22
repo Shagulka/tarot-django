@@ -31,12 +31,10 @@ class GetBonusMoneyView(LoginRequiredMixin, DetailView):
 
                 self.object.bonus = datetime.datetime.now(timezone.utc)
                 self.object.save()
-            else:
-                return redirect(self.request.META.get('HTTP_REFERER', '/'))
         else:
             self.object.balance += 20
 
             self.object.bonus = datetime.datetime.now(timezone.utc)
             self.object.save()
 
-        return super().get(*args, **kwargs)
+        return redirect(self.request.META.get('HTTP_REFERER', '/'))

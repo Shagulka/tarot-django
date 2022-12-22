@@ -28,6 +28,9 @@ class Deck:
         elif theme == 5:
             theme = 'гадание на день'
 
+        name = fortune.title_for_main_page
+        description = fortune.fortune_description
+
         generated_cards = []
         for card in cards:
             if card['upright']:
@@ -37,8 +40,10 @@ class Deck:
 
         card_text = 'Карты:\n' + '\n'.join(generated_cards)
 
-        prompt = (f"Сгенерируй {theme} по картам.\n"
-                  f"{card_text}\n\nГадание:\n")
+        prompt = (f'Сгенерируй {theme} с '
+                  f'названием {name} по картам таро.\n'
+                  f'Описание гадания: {description}\n'
+                  f'{card_text}\nГадание:\n')
 
         print(prompt)
         response = openai.Completion.create(
