@@ -30,6 +30,9 @@ class FortuneListView(LoginRequiredMixin, ListView):
 class FortuneDetailView(LoginRequiredMixin, DetailView):
     model = Fortune
 
+    def get_object(self, queryset=None):
+        return get_object_or_404(Fortune, slug=self.kwargs['slug'])
+
     def get_template_names(self) -> str:
         """Return template name depending on fortune type"""
         if self.object.type_fortune_telling == 1:
