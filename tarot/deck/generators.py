@@ -58,14 +58,14 @@ class Deck:
 
         print(prompt)
         response = openai.Completion.create(
-            engine="davinci",
+            engine='davinci',
             prompt=prompt,
             temperature=0.9,
             max_tokens=256,
             top_p=1,
             frequency_penalty=0,
             presence_penalty=0,
-            stop=["\n", " Гадание:"]
+            stop=['\n', ' Гадание:']
         )
         if response.choices:
             return response.choices[0].text
