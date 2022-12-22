@@ -11,7 +11,6 @@
         }
             </style>
             <div class="badge fortune p-3 col-12">
-                {# <a class="btn btn-primary" href="/" role="button">{{ fortune.id }}</a> #}
                 <p class="h3">{{ fortune.title_for_main_page }}</p>
                 <p class="text-light">{{ fortune.fortune_description }}</p>
                 <div class="justify-content-end">
@@ -20,7 +19,7 @@
                        href="{% url 'fortune:fortune_detail' fortune.slug %}"
                        role="button"
                        onclick="start_load()">
-                        <span id="price">{{ fortune.price }} 🪙</span>
+                        <span id="price">Купить {{ fortune.price }} 🪙</span>
                     </a>
                     <script type="text/javascript">
                         function start_load() {
