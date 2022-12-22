@@ -58,6 +58,7 @@ set up
 cd tarot/
 python manage.py migrate
 python manage.py createsuperuser
+python manage.py collectstatic
 ```
 
 
@@ -68,3 +69,7 @@ python manage.py runserver
 
 создайте гадания на `localhost:8000/admin`
 (обратите внимание, что пока что работают гадания только на трех картах)
+
+## ERD
+
+![image](ERD.png)

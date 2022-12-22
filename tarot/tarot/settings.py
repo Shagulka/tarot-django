@@ -94,9 +94,9 @@ STATIC_ROOT = 'static'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_URL = '/media.example/'
+MEDIA_URL = '/media/'
 
-MEDIA_ROOT = BASE_DIR / 'media.example'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
