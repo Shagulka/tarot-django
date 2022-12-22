@@ -56,7 +56,6 @@ class Deck:
                   f'Описание гадания: {description}\n'
                   f'{card_text}\nГадание:\n')
 
-        print(prompt)
         response = openai.Completion.create(
             engine='davinci',
             prompt=prompt,
