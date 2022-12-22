@@ -1,5 +1,7 @@
 import requests
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.views import LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -61,3 +63,10 @@ class ProfileUpdate(
             form.instance.timezone = settings.TIME_ZONE
         form.save()
         return super().form_valid(form)
+
+
+class CustomLogoutView(LogoutView):
+    def dispatch(self, request, *args, **kwargs):
+        response = super().dispatch(request, *args, **kwargs)
+        messages.add_message(request, messages.INFO, 'Вы успешно вышли')
+        return response
