@@ -44,21 +44,23 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
+укажите ваш ключ от `openai` в файле `.env`, иначе предсказания не будут работать
+
 
 
 ## run the project
 
-migration
+set up
 ```bash
+cd tarot/
 python manage.py migrate
+python manage.py createsuperuser
 ```
 
-load fixtures (optional)
-```bash
-python manage.py loaddata initial.yaml
-```
 
 run server
 ```bash
 python manage.py runserver
 ```
+
+создайте гадания на `localhost:8000/admin`
