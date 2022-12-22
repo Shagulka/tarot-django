@@ -68,7 +68,7 @@ class Account(AbstractUser):
 
     gender_choices = dict(GenderTypes.choices)
 
-    def get_zodiac_sign(self):
+    def get_zodiac_sign(self) -> int:
         if self.date_of_birth:
             day, month = self.date_of_birth.day, self.date_of_birth.month
 
@@ -98,7 +98,7 @@ class Account(AbstractUser):
                 return 8 if (day < 22) else 9
 
     @property
-    def zodiac_sign(self):
+    def zodiac_sign(self) -> str:
         zodiac_dict = {
             1: 'Овен',
             2: ' Телец',
