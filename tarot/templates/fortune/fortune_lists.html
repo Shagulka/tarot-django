@@ -17,7 +17,7 @@
                 <div class="justify-content-end">
                     <a id="buy_button"
                        class="btn btn-primary"
-                       href="{% url 'fortune:fortune_detail' fortune.pk %}"
+                       href="{% url 'fortune:fortune_detail' fortune.slug %}"
                        role="button"
                        onclick="start_load()">
                         <span id="price">{{ fortune.price }} 🪙</span>

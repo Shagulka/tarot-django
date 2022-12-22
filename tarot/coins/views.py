@@ -19,6 +19,13 @@ class GetBonusMoneyView(LoginRequiredMixin, DetailView):
         return BankAccount.objects.get(user=self.request.user)
 
     def get(self, *args, **kwargs):
+        """Page for getting bonus money
+
+        if user already got bonus money in last 24 hours
+        then they can't get it again
+
+        then redirect to previous page
+        """
         self.object = self.get_object()
         last_bonus_time = self.object.bonus
         # last_bonus_time = pytz.timezone(self.object.timezone).localize(

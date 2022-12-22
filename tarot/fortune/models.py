@@ -56,7 +56,7 @@ class Fortune(models.Model):
     )
 
     @property
-    def get_number_of_cards(self):
+    def number_of_cards(self) -> int:
         if self.type_fortune_telling == self.TypesAlignment.TAROT_1:
             return 1
         elif self.type_fortune_telling == self.TypesAlignment.TAROT_2:

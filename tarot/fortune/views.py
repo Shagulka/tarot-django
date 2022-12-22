@@ -21,7 +21,7 @@ class FortuneListView(LoginRequiredMixin, ListView):
     # def get_queryset(self):
     # return Fortune.objects.all()
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs) -> dict:
         context = super().get_context_data(**kwargs)
         context['fortunes'] = self.get_queryset()
         return context
@@ -30,7 +30,11 @@ class FortuneListView(LoginRequiredMixin, ListView):
 class FortuneDetailView(LoginRequiredMixin, DetailView):
     model = Fortune
 
-    def get_template_names(self):
+    def get_object(self, queryset=None):
+        return get_object_or_404(Fortune, slug=self.kwargs['slug'])
+
+    def get_template_names(self) -> str:
+        """Return template name depending on fortune type"""
         if self.object.type_fortune_telling == 1:
             return 'fortune/tarot/tarot_1.html'
         elif self.object.type_fortune_telling == 2:
@@ -59,6 +63,12 @@ class FortuneDetailView(LoginRequiredMixin, DetailView):
         return context
 
     def get(self, *args, **kwargs):
+        """Page for getting prediction
+
+        if user has enough money and personal info set up,
+        then he can get prediction
+        else redirect to fortune list page
+        """
         self.object = self.get_object()
         self.get_context_data(object=self.object)
         bank_account = get_object_or_404(BankAccount, user=self.request.user)
