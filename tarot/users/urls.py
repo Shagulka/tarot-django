@@ -13,7 +13,7 @@ urlpatterns = [
          ),
          name='login'),
     path('logout/',
-         auth_views.LogoutView.as_view(template_name='users/logout.html'),
+         views.CustomLogoutView.as_view(),
          name='logout'),
     path('change-password/',
          auth_views.PasswordChangeView.as_view(

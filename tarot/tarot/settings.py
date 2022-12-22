@@ -23,7 +23,6 @@ INSTALLED_APPS = [
 
 ]
 
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -105,3 +104,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 AUTH_USER_MODEL = 'users.Account'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/users/login'
+
+LOGOUT_REDIRECT_URL = '/'
+
+BONUS_COINS = 20
