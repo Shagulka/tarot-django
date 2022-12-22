@@ -72,7 +72,8 @@ class Deck:
         else:
             return 'будущее неизвестно'
 
-    def get_cards(self, fortune, user=None) -> tuple[dict, str]:
+    def get_cards(self, fortune, user=None) -> tuple:
+        # removed -> tuple(list, str) as it is not supported in python 3.8
         """Get cards and prediction for fortune
 
         Args:
