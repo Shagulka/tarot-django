@@ -84,6 +84,7 @@ class FortuneDetailView(LoginRequiredMixin, DetailView):
                     'Гадания недоступны,'
                     ' так как вы не заполнили обязательные данные профиля'
                 )
+                return redirect('fortune:fortune_list')
         else:
             messages.error(self.request, 'Недостаточно средств')
             return redirect('fortune:fortune_list')
