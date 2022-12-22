@@ -5,6 +5,8 @@ from django.shortcuts import redirect
 from django.utils import timezone
 from django.views.generic.detail import DetailView
 
+from tarot import settings
+
 from .models import BankAccount
 
 
@@ -34,12 +36,12 @@ class GetBonusMoneyView(LoginRequiredMixin, DetailView):
             if datetime.datetime.now(
                     timezone.utc
             ) - last_bonus_time >= datetime.timedelta(hours=24):
-                self.object.balance += 20
+                self.object.balance += settings.BONUS_COINS
 
                 self.object.bonus = datetime.datetime.now(timezone.utc)
                 self.object.save()
         else:
-            self.object.balance += 20
+            self.object.balance += settings.BONUS_COINS
 
             self.object.bonus = datetime.datetime.now(timezone.utc)
             self.object.save()
