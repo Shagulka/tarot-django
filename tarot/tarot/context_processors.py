@@ -22,8 +22,8 @@ def add_user_balance_to_context(request):
                     datetime.datetime.now(datetime.timezone.utc) - bonus_time
                 )
                 context['bonus_status'] = (
-                    f'Осталось {time_left.seconds // 3600}:'
-                    f'{time_left.seconds % 3600 // 60}'
+                    f'Осталось {(time_left.seconds // 3600):02d}:'
+                    f'{(time_left.seconds % 3600 // 60):02d}'
                 )
 
         else:
