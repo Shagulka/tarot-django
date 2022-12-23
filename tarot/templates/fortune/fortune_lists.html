@@ -20,12 +20,19 @@
                            href="{% url 'fortune:fortune_detail' fortune.slug %}"
                            role="button"
                            onclick="start_load()">
-                            <span id="price">Купить {{ fortune.price }} 🪙</span>
+                            <span class="price">Купить {{ fortune.price }} 🪙</span>
                         </a>
                         <script type="text/javascript">
                         function start_load() {
-                            document.getElementById('buy_button').classList.add('disabled');
-                            document.getElementById('price').innerHTML = 'Загрузка...';
+                            elements = document.getElementsByClassName('btn');
+                            for (var i = 0; i < elements.length; i++) {
+                                elements[i].classList.add('disabled');
+                            }
+                            elements = document.getElementsByClassName('price');
+                            for (var i = 0; i < elements.length; i++) {
+                                elements[i].innerHTML = 'Загрузка...';
+                            }
+                        
                         }
                         </script>
                     </div>
