@@ -10,23 +10,25 @@
             background-color: #580599;
         }
             </style>
-            <div class="badge fortune p-3 col-12">
-                <p class="h3">{{ fortune.title_for_main_page }}</p>
-                <p class="text-light">{{ fortune.fortune_description }}</p>
-                <div class="justify-content-end">
-                    <a id="buy_button"
-                       class="btn btn-primary"
-                       href="{% url 'fortune:fortune_detail' fortune.slug %}"
-                       role="button"
-                       onclick="start_load()">
-                        <span id="price">Купить {{ fortune.price }} 🪙</span>
-                    </a>
-                    <script type="text/javascript">
+            <div class="py-3">
+                <div class="badge fortune p-3 col-12">
+                    <p class="h3">{{ fortune.title_for_main_page }}</p>
+                    <p class="text-light">{{ fortune.fortune_description }}</p>
+                    <div class="justify-content-end">
+                        <a id="buy_button"
+                           class="btn btn-primary"
+                           href="{% url 'fortune:fortune_detail' fortune.slug %}"
+                           role="button"
+                           onclick="start_load()">
+                            <span id="price">Купить {{ fortune.price }} 🪙</span>
+                        </a>
+                        <script type="text/javascript">
                         function start_load() {
                             document.getElementById('buy_button').classList.add('disabled');
                             document.getElementById('price').innerHTML = 'Загрузка...';
                         }
-                    </script>
+                        </script>
+                    </div>
                 </div>
             </div>
         {% endfor %}
