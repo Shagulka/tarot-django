@@ -67,9 +67,9 @@ class Deck:
             stop=['\n', ' Гадание:']
         )
         if response.choices:
-            return response.choices[0].text
-        else:
-            return 'будущее неизвестно'
+            if response.choices[0].text:
+                return response.choices[0].text
+        return 'будущее неизвестно'
 
     def get_cards(self, fortune, user=None) -> tuple:
         # removed -> tuple(list, str) as it is not supported in python 3.8
@@ -88,11 +88,11 @@ class Deck:
         """
         random_cards = self.data.copy()
         if user:
-            today = datetime.datetime.now().date()
+            now = datetime.datetime.now()
             try:
                 random.seed(
                     str(user.first_name + user.last_name +
-                        str(user.date_of_birth) + str(today)))
+                        str(user.date_of_birth) + str(now)))
             except Exception:
                 pass
         random.shuffle(random_cards)
