@@ -3,14 +3,20 @@
 {% block title %}Вход{% endblock %}
 
 {% block content %}
-    <br>
-    <h2 class="text-center text-light">Вход</h2>
-    <form method="post">
-        {% include 'users/includes/base_form.html' %}
-        <p class="text-center text-light"><a href="{% url 'users:password_reset' %}">Забыли пароль?</a></p>
-        <p class="text-center text-light">Нет аккаунта? <a href="{% url 'users:signup' %}">Зарегистрироваться</a></p>
-        <div class="text-center text-light">
-            <button type="submit" class="btn btn-primary">Войти</button>
-        </div>
-    </form>
+
+
+        <div class="justify-content-center">
+            <form method="post" class="text-light">
+
+                {% include 'users/includes/base_form.html' %}
+
+                <p class="text-center text-light"><a href="{% url 'users:password_reset' %}">Забыли пароль?</a></p>
+                <p class="text-center text-light">Нет аккаунта? <a href="{% url 'users:signup' %}">Зарегистрироваться</a></p>
+                <div class="text-center text-light">
+                    <button type="submit" class="btn btn-success me-2">Войти</button>
+                </div>
+
+            </form>
+
+
 {% endblock %}
