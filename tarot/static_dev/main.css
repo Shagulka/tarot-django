@@ -3,9 +3,6 @@ label.required::after {
     color: red;
 }
 
-input{
-    max-width: 5em;
-}
 .nav-pills > li > a {
     border-radius: 0;
 }
