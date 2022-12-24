@@ -14,8 +14,12 @@
     {% else %}
         <li class="list-group-item rounded-3">Имя: {{ account.get_full_name }}</li>
     {% endif %}
-    <li class="list-group-item">Ник: {{ account.custom_username }}</li>
-    <li class="list-group-item">Био: {{ account.bio }}</li>
+    {% if account.custom_username %}
+        <li class="list-group-item">Ник: {{ account.custom_username }}</li>
+    {% endif %}
+    {% if account.bio %}
+        <li class="list-group-item">Био: {{ account.bio }}</li>
+    {% endif %}
     <li class="list-group-item">Пол: {{ account.get_gender_display }}</li>
     {% if account.date_of_birth %}
         <li class="list-group-item">Дата рождения: {{ account.date_of_birth }}</li>
