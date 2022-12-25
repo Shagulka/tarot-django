@@ -8,7 +8,6 @@ from django.urls import reverse_lazy
 from django.views.generic import UpdateView
 from django.views.generic.edit import CreateView
 
-from coins.models import BankAccount
 from tarot import settings
 
 from .forms import AccountChangeForm, AccountCreationForm
