@@ -28,7 +28,6 @@ class SignUpFormView(SuccessMessageMixin, CreateView):
             username=form.cleaned_data['email'],
             password=form.cleaned_data['password1'],
         )
-        BankAccount.objects.get_or_create(user=user, balance=0)
         login(self.request, user)
         return redirect(self.success_url)
 

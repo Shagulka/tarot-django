@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'fortune',
     'users',
     'coins',
+    'core',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
