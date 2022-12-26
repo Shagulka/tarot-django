@@ -8,7 +8,6 @@ from django.urls import reverse_lazy
 from django.views.generic import UpdateView
 from django.views.generic.edit import CreateView
 
-from coins.models import BankAccount
 from tarot import settings
 
 from .forms import AccountChangeForm, AccountCreationForm
@@ -28,7 +27,6 @@ class SignUpFormView(SuccessMessageMixin, CreateView):
             username=form.cleaned_data['email'],
             password=form.cleaned_data['password1'],
         )
-        BankAccount.objects.get_or_create(user=user, balance=0)
         login(self.request, user)
         return redirect(self.success_url)
 
