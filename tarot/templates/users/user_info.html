@@ -9,9 +9,7 @@
 {% endif %}
 <ul class="list-group d-flex justify-content-start">
     <span class="text-black-50 fw-bold">{{ user.email }}</span>
-    {% if account.last_name is None %}
-        <li class="list-group-item rounded-3">Имя: {{ account.first_name }}</li>
-    {% else %}
+    {% if account.first_name %}
         <li class="list-group-item rounded-3">Имя: {{ account.get_full_name }}</li>
     {% endif %}
     {% if account.custom_username %}
@@ -20,8 +18,8 @@
     {% if account.bio %}
         <li class="list-group-item">Био: {{ account.bio }}</li>
     {% endif %}
-    <li class="list-group-item">Пол: {{ account.get_gender_display }}</li>
     {% if account.date_of_birth %}
+        <li class="list-group-item">Пол: {{ account.get_gender_display }}</li>
         <li class="list-group-item">Дата рождения: {{ account.date_of_birth }}</li>
         <li class="list-group-item">Знак зодиака: {{ account.zodiac_sign }}</li>
     {% endif %}
