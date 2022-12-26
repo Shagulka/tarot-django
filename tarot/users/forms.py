@@ -17,7 +17,10 @@ class AccountChangeForm(UserChangeForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.visible_fields():
-            field.field.widget.attrs['class'] = 'form-control mb-3'
+            if field.field.widget.input_type == 'select':
+                field.field.widget.attrs['class'] = 'form-select'
+            else:
+                field.field.widget.attrs['class'] = 'form-control mb-3'
 
     class Meta:
         model = Account
@@ -42,8 +45,7 @@ class AccountChangeForm(UserChangeForm):
         widgets = {
             'date_of_birth': forms.DateInput(attrs={'type': 'date'},
                                              format='%Y-%m-%d'),
-            'gender': forms.Select(attrs={'class': 'form-select'},
-                                   choices=Account.GenderTypes.choices),
+            'gender': forms.Select(choices=Account.GenderTypes.choices),
             'profile_picture': forms.FileInput(
                 attrs={'class': 'form-control'}
             ),
