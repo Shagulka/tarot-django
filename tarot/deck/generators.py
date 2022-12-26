@@ -27,7 +27,7 @@ class Deck:
         returns default prediction ('будущее неизвестно')
         """
         openai.api_key = os.environ.get('OPENAI_API_KEY')
-        theme = fortune.default_card_description
+        theme = fortune.type
         themes = {
             1: 'обычное гадание',
             2: 'гадание на любовь',
@@ -49,8 +49,8 @@ class Deck:
         for card in cards:
             card['description'] = card[card_description[theme]]
 
-        name = fortune.title_for_main_page
-        description = fortune.fortune_description
+        name = fortune.title_for_AI if fortune.title_for_AI else fortune.title
+        description = fortune.description
 
         generated_cards = []
         for card in cards:
@@ -61,12 +61,13 @@ class Deck:
                 generated_cards.append(
                     f'{card["name"]} (перевернута) - {card["description"]}')
 
-        card_text = 'Карты:\n' + '\n'.join(generated_cards)
+        card_text = 'Вытянутые карты:\n' + '\n'.join(generated_cards)
 
-        prompt = (f'Сгенерируй {theme_text} с '
+        prompt = (f'Сгенерируй {theme_text} '
+                  f'пользователю {user.first_name} c'
                   f'названием {name} по картам таро.\n'
                   f'Описание гадания: {description}\n'
-                  f'{card_text}\nГадание:\n')
+                  f'{card_text}\nРезультат гадания:\n')
 
         print(prompt)
 
@@ -78,7 +79,7 @@ class Deck:
             top_p=1,
             frequency_penalty=0,
             presence_penalty=0,
-            stop=['Гадание:']
+            stop=['Результат гадания:']
         )
         if response.choices:
             if response.choices[0].text:
