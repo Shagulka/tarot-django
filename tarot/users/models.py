@@ -1,3 +1,5 @@
+from bisect import bisect
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.safestring import mark_safe
@@ -46,7 +48,7 @@ class Account(AbstractUser):
     gender = models.IntegerField(
         'пол',
         choices=GenderTypes.choices,
-        default=GenderTypes.FEMALE,
+        null=True,
         help_text='Ваш пол'
     )
     profile_picture = models.ImageField(
@@ -72,46 +74,27 @@ class Account(AbstractUser):
         if self.date_of_birth:
             day, month = self.date_of_birth.day, self.date_of_birth.month
 
-            if month == 12:
-                return 9 if (day < 22) else 10
-            elif month == 1:
-                return 10 if (day < 20) else 11
-            elif month == 2:
-                return 11 if (day < 19) else 12
-            elif month == 3:
-                return 12 if (day < 21) else 1
-            elif month == 4:
-                return 1 if (day < 20) else 2
-            elif month == 5:
-                return 2 if (day < 21) else 3
-            elif month == 6:
-                return 3 if (day < 21) else 4
-            elif month == 7:
-                return 4 if (day < 23) else 5
-            elif month == 8:
-                return 5 if (day < 23) else 6
-            elif month == 9:
-                return 6 if (day < 23) else 7
-            elif month == 10:
-                return 7 if (day < 23) else 8
-            elif month == 11:
-                return 8 if (day < 22) else 9
+            signs = [(1, 20, 10), (2, 18, 11), (3, 20, 12), (4, 20, 1),
+                     (5, 21, 2), (6, 21, 3), (7, 22, 4), (8, 23, 5),
+                     (9, 23, 6), (10, 23, 7), (11, 22, 8), (12, 22, 9),
+                     (12, 31, 10)]
+            return signs[bisect(signs, (month, day))][2]
 
     @property
     def zodiac_sign(self) -> str:
         zodiac_dict = {
             1: 'Овен',
-            2: ' Телец',
-            3: ' Близнецы',
-            4: ' Рак',
-            5: ' Лев',
-            6: ' Дева',
-            7: ' Весы',
-            8: ' Скорпион',
-            9: ' Стрелец',
-            10: ' Козерог',
-            11: ' Водолей',
-            12: ' Рыбы'
+            2: 'Телец',
+            3: 'Близнецы',
+            4: 'Рак',
+            5: 'Лев',
+            6: 'Дева',
+            7: 'Весы',
+            8: 'Скорпион',
+            9: 'Стрелец',
+            10: 'Козерог',
+            11: 'Водолей',
+            12: 'Рыбы'
         }
         return zodiac_dict.get(self.get_zodiac_sign())
 
