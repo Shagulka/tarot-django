@@ -1,16 +1,16 @@
 import datetime
 
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.utils import timezone
 from django.views.generic.detail import DetailView
 
 from tarot import settings
+from users.permissions import CustomLoginRequiredMixin
 
 from .models import BankAccount
 
 
-class GetBonusMoneyView(LoginRequiredMixin, DetailView):
+class GetBonusMoneyView(CustomLoginRequiredMixin, DetailView):
     model = BankAccount
     template_name = 'coins/get-bonus-money.html'
 
