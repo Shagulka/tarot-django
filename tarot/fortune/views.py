@@ -35,23 +35,23 @@ class FortuneDetailView(LoginRequiredMixin, DetailView):
 
     def get_template_names(self) -> str:
         """Return template name depending on fortune type"""
-        if self.object.type_fortune_telling == 1:
+        if self.object.alignment == 1:
             return 'fortune/tarot/tarot_1.html'
-        elif self.object.type_fortune_telling == 2:
+        elif self.object.alignment == 2:
             return 'fortune/tarot/tarot_2.html'
-        elif self.object.type_fortune_telling == 3:
+        elif self.object.alignment == 3:
             return 'fortune/tarot/tarot_3.html'
-        elif self.object.type_fortune_telling == 4:
+        elif self.object.alignment == 4:
             return 'fortune/tarot/tarot_4.html'
-        elif self.object.type_fortune_telling == 5:
+        elif self.object.alignment == 5:
             return 'fortune/tarot/tarot_2_3.html'
-        elif self.object.type_fortune_telling == 6:
+        elif self.object.alignment == 6:
             return 'fortune/tarot/tarot_3_3.html'
-        elif self.object.type_fortune_telling == 7:
+        elif self.object.alignment == 7:
             return 'fortune/tarot/tarot_H.html'
-        elif self.object.type_fortune_telling == 8:
+        elif self.object.alignment == 8:
             return 'fortune/tarot/tarot_star.html'
-        elif self.object.type_fortune_telling == 9:
+        elif self.object.alignment == 9:
             return 'fortune/tarot/tarot_9.html'
 
     def get_context_data(self, **kwargs):

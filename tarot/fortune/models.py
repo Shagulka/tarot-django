@@ -34,7 +34,9 @@ class Fortune(models.Model):
         max_length=150,
         blank=True,
         help_text=('Название гадания, которое будет '
-                   'использоваться в ИИ')
+                   'использоваться в ИИ '
+                   '(по умолчанию используется '
+                   'гадание для главной страницы)')
     )
 
     class TypesAlignment(models.IntegerChoices):
@@ -67,7 +69,7 @@ class Fortune(models.Model):
             self.TypesAlignment.TAROT_H: 7,
             self.TypesAlignment.TAROT_STAR: 5,
             self.TypesAlignment.TAROT_9: 9,
-        }[self.type_fortune_telling]
+        }[self.alignment]
 
     class TypesFortune(models.IntegerChoices):
         REGULAR = 1, 'Обычное'
