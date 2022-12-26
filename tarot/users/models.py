@@ -48,7 +48,7 @@ class Account(AbstractUser):
     gender = models.IntegerField(
         'пол',
         choices=GenderTypes.choices,
-        default=GenderTypes.FEMALE,
+        null=True,
         help_text='Ваш пол'
     )
     profile_picture = models.ImageField(
