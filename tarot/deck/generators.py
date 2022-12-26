@@ -28,16 +28,26 @@ class Deck:
         """
         openai.api_key = os.environ.get('OPENAI_API_KEY')
         theme = fortune.default_card_description
-        if theme == 1:
-            theme = 'обычное гадание'
-        elif theme == 2:
-            theme = 'гадание на любовь'
-        elif theme == 3:
-            theme = 'гадание на деньги'
-        elif theme == 4:
-            theme = 'гадание на карьеру'
-        elif theme == 5:
-            theme = 'гадание на день'
+        themes = {
+            1: 'обычное гадание',
+            2: 'гадание на любовь',
+            3: 'гадание на деньги',
+            4: 'гадание на карьеру',
+            5: 'гадание на день',
+            6: 'гадание на да/нет'
+        }
+        theme_text = themes.get(theme)
+        card_description = {
+            1: 'regular',
+            2: 'love',
+            3: 'finance',
+            4: 'career',
+            5: 'regular',
+            6: 'yesno'
+        }
+
+        for card in cards:
+            card['description'] = card[card_description[theme]]
 
         name = fortune.title_for_main_page
         description = fortune.fortune_description
@@ -45,16 +55,20 @@ class Deck:
         generated_cards = []
         for card in cards:
             if card['upright']:
-                generated_cards.append(card['name'])
+                generated_cards.append(
+                    f'{card["name"]} - {card["description"]};')
             else:
-                generated_cards.append(card['name'] + ' (перевернута)')
+                generated_cards.append(
+                    f'{card["name"]} (перевернута) - {card["description"]}')
 
         card_text = 'Карты:\n' + '\n'.join(generated_cards)
 
-        prompt = (f'Сгенерируй {theme} с '
+        prompt = (f'Сгенерируй {theme_text} с '
                   f'названием {name} по картам таро.\n'
                   f'Описание гадания: {description}\n'
                   f'{card_text}\nГадание:\n')
+
+        print(prompt)
 
         response = openai.Completion.create(
             engine='text-davinci-003',
@@ -64,7 +78,7 @@ class Deck:
             top_p=1,
             frequency_penalty=0,
             presence_penalty=0,
-            stop=['\n', ' Гадание:']
+            stop=['Гадание:']
         )
         if response.choices:
             if response.choices[0].text:
